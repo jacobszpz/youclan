@@ -1,0 +1,129 @@
+/* Fonts */
+@font-face {
+ font-family: Frutiger Roma;
+ src: url(./assets/fonts/Frutiger_Roma.ttf);
+}
+
+/* General */
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: pink;
+}
+
+h4 {
+  margin: 2px;
+  padding: 0;
+  font-family: 'Frutiger Roma';
+}
+
+/* Header */
+.main-logo {
+  display: block;
+  max-width: 16vw;
+  min-width: 160px;
+}
+
+.header-login {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: auto 0;
+  margin-left: auto;
+  align-items: flex-end;
+}
+
+.header-login > * {
+  margin: 0.6em 0.8em;
+}
+
+header {
+  background-color: #FFFFFF;
+}
+
+.main-header {
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 15px;
+}
+
+.header-submit {
+  max-width: 180px;
+  min-width: 10vw;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  background-color: #b52b45;
+  border-radius: 8px;
+  border-style: none;
+  min-height: 40px;
+  flex-shrink: 1;
+}
+
+.header-username, .header-password {
+  width: 100%;
+  max-width: 240px;
+  box-sizing: border-box;
+}
+
+.header-input {
+  width: 100%;
+  font-size: 1em;
+  height: auto;
+  box-sizing: border-box;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 400px) {
+  .header-logo {
+    margin: 0 auto;
+  }
+
+  .main-header {
+    min-width: unset;
+    flex-wrap: wrap;
+  }
+
+  .header-login {
+    flex-flow: column nowrap;
+    margin-left: unset;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+  }
+
+  .header-submit {
+    width: 100%;
+    min-width: 4em;
+  }
+}
+
+/* Main */
+main {
+  min-height: 70vh;
+}
+
+
+/* Footer */
+.homepage-footer {
+  padding: 4vh 4vh;
+  height: 12vh;
+  min-height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  color: #212121;
+  background-color: #FFFFFF;
+}
+
+.footer-links {
+  margin-left: auto;
+  color: #616161;
+}
+
+.footer-links:hover {
+  margin-left: auto;
+}
