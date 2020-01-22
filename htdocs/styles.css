@@ -14,10 +14,14 @@ body {
   background-color: pink;
 }
 
+h1, h2, h3, h4 {
+  font-family: 'Frutiger Roma';
+  margin: 0;
+}
+
 h4 {
   margin: 2px;
   padding: 0;
-  font-family: 'Frutiger Roma';
 }
 
 /* Header */
@@ -76,6 +80,26 @@ header {
   box-sizing: border-box;
 }
 
+.header-registration-link {
+  margin-left: auto;
+  text-decoration: none;
+  align-self: center;
+  height: 50%;
+}
+
+.header-registration {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 100%;
+  background-color: #b52b45;
+  color: #FFF;
+  border-radius: 12px;
+  padding: 1em;
+  max-height: 60px;
+  box-sizing: border-box;
+}
+
 /* Media Queries */
 @media only screen and (max-width: 400px) {
   .header-logo {
@@ -99,13 +123,57 @@ header {
     width: 100%;
     min-width: 4em;
   }
+
+  .header-registration-link {
+    margin: 0 auto;
+  }
 }
 
 /* Main */
 main {
   min-height: 70vh;
+  padding: 2em;
 }
 
+.main-center {
+  margin: 0 auto;
+  min-height: 70vh;
+  height: 100%;
+  max-width: 300px;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-div {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form-div > * {
+  padding: 1em 0em;
+  width: 100%;
+}
+
+.login-input {
+  width: 100%;
+  flex-basis: 300px;
+  flex-grow: 1;
+  box-sizing: border-box;
+  margin-top: 1em;
+  font-size: 1em;
+}
+
+#login-error-message {
+  font-weight: bold;
+  color: #b52b45;
+  margin: 0.6em 0;
+}
 
 /* Footer */
 .homepage-footer {

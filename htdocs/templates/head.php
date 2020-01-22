@@ -6,4 +6,7 @@
 
 <link rel="stylesheet" href="<?php print $file_root; ?>styles.css">
 
-<title>youclan - Make friends at university</title>
+<title><?php echo $current_title; ?></title>
+
+<script src="<?php print $file_root; ?>scripts/jquery-3.4.1.min.js"></script>
+<script src="<?php print $file_root; ?>scripts/basic_functions.js"></script>

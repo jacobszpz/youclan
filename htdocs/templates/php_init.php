@@ -104,6 +104,12 @@
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
   }
 
+  $loginHeader = TRUE;
+
+  if ($loggedIn) {
+    $loginHeader = FALSE;
+  }
+
   $tempLoggedIn = FALSE;
 
   // Check if Temporarily Logged In
@@ -111,10 +117,24 @@
     $tempLoggedIn = TRUE;
   }
 
-  $Identity_Session = "Default";
+  $Username_Session = "Default";
 
-  if (isset($_SESSION['identity'])) {
-    $Identity_Session = $_SESSION['identity'];
+  if (isset($_SESSION['username'])) {
+    $Username_Session = $_SESSION['username'];
   }
+
+  $Name_Session = "John";
+
+  if (isset($_SESSION['name'])) {
+    $Name_Session = $_SESSION['name'];
+  }
+
+  $Surnames_Session = "Hrycak";
+
+  if (isset($_SESSION['surnames'])) {
+    $Surnames_Session = $_SESSION['surnames'];
+  }
+
+  $current_title = $main_strings['website_title'];
 
 ?>
