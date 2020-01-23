@@ -183,7 +183,7 @@
                 <span id="password-show-span"><?php echo $main_strings['password_show']; ?></span>
                 <input type="checkbox" name="show" value="" onclick="togglePasswordShow()" class="site-login-checkbox">
               </div>
-              <input type="submit" class="header-submit" name="" value="Log In">
+              <input type="submit" class="header-submit" name="" value="<?php echo $main_strings['account_login']; ?>">
             </div>
         </div>
       </form>

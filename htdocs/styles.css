@@ -11,7 +11,7 @@
 
 body {
   margin: 0;
-  background-color: pink;
+  background-color: #FFF
 }
 
 h1, h2, h3, h4 {
@@ -44,7 +44,7 @@ h4 {
 }
 
 header {
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 
 .main-header {
@@ -133,6 +133,7 @@ header {
 main {
   min-height: 70vh;
   padding: 2em;
+  background-image: linear-gradient(#FFF0F3, pink);
 }
 
 .main-center {
@@ -145,6 +146,10 @@ main {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.registration-center {
+  max-width: 600px;
 }
 
 .login-form-div {
@@ -167,6 +172,53 @@ main {
   box-sizing: border-box;
   margin-top: 1em;
   font-size: 1em;
+}
+
+.register-names {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.register-name {
+  padding-right: 0.4em;
+}
+
+.register-surname {
+  padding-left: 0.4em;
+}
+
+.register-names > * {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.register-plus {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.register-plus > * {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.register-input {
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.4em;
+}
+
+.reg-select {
+  margin-top: 0.4em;
+  font-size: 1em;
+}
+
+.gender-radio {
+  font-size: 1.2em;
 }
 
 #login-error-message {

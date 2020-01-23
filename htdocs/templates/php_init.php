@@ -22,7 +22,7 @@
   }
 
   function getLanguage() {
-    $valid_langs = ['es', 'en'];
+    $valid_langs = ['en'];
     $lang = "en";
 
     $HTTP_LANG = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
