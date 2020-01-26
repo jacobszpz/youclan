@@ -23,15 +23,19 @@
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
-  // Do not show page if user is already logged in
-  if ($loggedIn) {
-    header("location: " . $file_root);
-    exit;
-  }
+  # USER LOGGED IN REDIRECT #
 
-  if ($tempLoggedIn) {
-    header("location: " . $file_root . "password/new.php");
-    exit;
+  if ($loggedIn) {
+    if ($Lost_Session) {
+      header("location: " . $file_root . "password/new.php");
+      exit;
+    } else if (!$Verified_Session) {
+      header("location: " . $file_root . "account/verify.php");
+      exit;
+    } else {
+      header("location: " . $file_root);
+      exit;
+    }
   }
 
   $showErrorMessage = FALSE;
@@ -53,7 +57,7 @@
 
     $phpErrorMessage .= "Variables From Request Read<br>";
 
-    // If both variables present
+    # EMPTY REQUEST DETECTION #
     if (!empty($Username_Request) && !empty($Password_Request)) {
       $phpErrorMessage .= "Login is not empty<br>";
 
@@ -68,7 +72,7 @@
         $phpErrorMessage .= "DB Connection was successful<br>";
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount, LostAccount FROM users WHERE Username = ?";
 
         if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
           // Bind variables to the prepared statement as parameters
@@ -91,7 +95,7 @@
 
                 // Bind result variables
                 mysqli_stmt_bind_result($Statement_SQL, $Username_Result, $Password_Result,
-                $Name_Result, $Surnames_Result, $VerifiedAccount_Result);
+                $Name_Result, $Surnames_Result, $VerifiedAccount_Result, $LostAccount_Result);
 
                 if (mysqli_stmt_fetch($Statement_SQL)){
                   $phpErrorMessage .= "Results Fetched<br>";
@@ -108,11 +112,23 @@
                     $_SESSION['name'] = $Name_Result;
                     $_SESSION['surnames'] = $Surnames_Result;
 
+                    // Account Had Been Lost At Some Point Before
+                    // User Has Been Able To Log Back In
+                    // Therefore, Delete Token And Account Flag
+                    if ($LostAccount_Result === 1) {
+                      $lostStatusReset_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Result'";
+                      $dbLostUpdate = mysqli_query($Connection_SQL, $lostStatusReset_Query);
+                    }
+
                     if ($VerifiedAccount_Result === 0) {
+                      $_SESSION['verified'] = FALSE;
                       header("location: " . $file_root . "login/verify.php");
+                      exit;
                     } else {
+                      $_SESSION['verified'] = TRUE;
                       // Redirect user to welcome page
                       header("location: " . $file_root);
+                      exit;
                     }
                   }
                 }

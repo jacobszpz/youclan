@@ -1,0 +1,11 @@
+Greetings NAME,
+<br>
+Your account was created successfully.
+<br>
+To verify this username belongs to you, please click on the link below:
+<br>
+<a href="https://youclan.uk/account/verify.php?token=TOKEN">Verify Account</a>
+<br>
+Or enter the token TOKEN at https://youclan.uk/account/verify.php after logging in
+<br><br>
+Thank you for your preference.

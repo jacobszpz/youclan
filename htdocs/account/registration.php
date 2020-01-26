@@ -20,15 +20,19 @@
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
-  // Do not show page if user is already logged in
-  if ($loggedIn) {
-    header("location: " . $file_root);
-    exit;
-  }
+  # USER LOGGED IN REDIRECT #
 
-  if ($tempLoggedIn) {
-    header("location: " . $file_root . "password/new.php");
-    exit;
+  if ($loggedIn) {
+    if ($Lost_Session) {
+      header("location: " . $file_root . "password/new.php");
+      exit;
+    } else if (!$Verified_Session) {
+      header("location: " . $file_root . "account/verify.php");
+      exit;
+    } else {
+      header("location: " . $file_root);
+      exit;
+    }
   }
 
   $showErrorMessage = FALSE;
@@ -66,111 +70,46 @@
 
   */
 
-  // Registration Function
-  if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
-    $phpErrorMessage .= "Form Method is POST<br>";
+  function sendTokenMail($name, $user, $token) {
+    global $file_root, $lang, $main_strings;
 
-    require_once $file_root . "database/config.php";
+    $email = "$user@uclan.ac.uk";
 
-    // Set Variables
-    $Name_Request = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
-    $Surname_Request = trim(filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING));
-    $Username_Request = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
-    // Idiot handling
-    $Username_Request = str_ireplace("@uclan.ac.uk", "", $Username_Request);
-    $Password_Request = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+    $user_mail_body = file_get_contents($file_root . 'templates/mail.php');
+    $user_mail_body = str_replace('MAIN_TEXT', file_get_contents($file_root . 'texts/mail/' . $lang . '_verify.txt'), $user_mail_body);
+    $user_mail_body = str_replace('NAME', $name, $user_mail_body);
+    $user_mail_body = str_replace('MAIL', $email, $user_mail_body);
+    $user_mail_body = str_replace('TOKEN', "$token", $user_mail_body);
+    $user_mail_body = str_replace('DISCLAIMER_TEXT', file_get_contents($file_root . 'texts/mail/' . $lang .'_disclaimer.txt'), $user_mail_body);
 
-    // More Variables
-    $BirthDay_Request = trim(filter_input(INPUT_POST, 'day', FILTER_SANITIZE_NUMBER_INT));
-    $BirthMonth_Request = trim(filter_input(INPUT_POST, 'month', FILTER_SANITIZE_STRING));
-    $BirthYear_Request = trim(filter_input(INPUT_POST, 'year', FILTER_SANITIZE_NUMBER_INT));
 
-    $Gender_Request = trim(filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_NUMBER_INT));
+    $user_mail_reply_to = 'no-reply@youclan.uk';
+    $user_mail_sender = 'no-reply@youclan.uk';
 
-    $Sent_Request = TRUE;
+    $user_mail_subject = $main_strings['mail_contact_subject'];
 
-    if (empty($Name_Request) || empty($Surname_Request)) {
-      $showErrorMessage = TRUE;
-      $errorType = 1;
-    } else if (empty($Username_Request) || empty($Password_Request)) {
-      $showErrorMessage = TRUE;
-      $errorType = 2;
-    } else if (empty($BirthDay_Request) || empty($BirthMonth_Request) || empty($BirthYear_Request)){
-      $showErrorMessage = TRUE;
-      $errorType = 3;
-    }
+    // To send HTML mail, the Content-type header must be set
+    $mail_headers  = 'MIME-Version: 1.0' . "\r\n";
+    $mail_headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-    $phpErrorMessage .= "Variables From Request Read<br>";
+    // Create email headers
+    $mail_headers .= 'From: youclan <' . $user_mail_sender . "> \r\n" . 'Reply-To: ' . $user_mail_reply_to . "\r\n";
+    $mail_headers .= 'X-Mailer: PHP/' . phpversion();
 
-    // Form is complete
-    if (!$showErrorMessage) {
-      $phpErrorMessage .= "Register form is not empty<br>";
+    $mailOP = mail($email, $user_mail_subject, $user_mail_body, $mail_headers);
+    return $mailOP;
+  }
 
-      $longMonthArray = [1, 3, 5, 7, 8, 10, 12];
-
-      // Additional Validation
-      $Password_Length = strlen($Password_Request);
-
-      if ($Password_Length < 8) {
-        // Check pass length
-        $showErrorMessage = TRUE;
-        $errorType = 6;
-      } else if (!preg_match('/\d/', $Password_Request) && $Password_Length < 14) {
-        // Check password has at least one number
-        $showErrorMessage = TRUE;
-        $errorType = 7;
-      } else if (preg_match('/[^a-zA-Z\-]/', $Username_Request)) {
-        // Check if username contains an invalid char
-        $showErrorMessage = TRUE;
-        $errorType = 5;
-      } else {
-        // Check valid birthday
-        if (!checkdate($BirthMonth_Request, $BirthDay_Request, $BirthYear_Request)){
-          $showErrorMessage = TRUE;
-          $errorType = 8;
-        } else if ($BirthYear_Request < 1900 || $BirthYear_Request > 2050){
-          $showErrorMessage = TRUE;
-          $errorType = 8;
-        } else if ($Gender_Request != 0 && $Gender_Request != 1) {
-          // Invalid gender through mischieving
-          // Fuck you maria
-
-          /*
-                        __
-                      (   )
-                     /---/
-                    / - /
-                   / - /
-            __----/   /------__
-            (                  )
-            (                 )
-            (               )
-
-            // TODO: Complete middle finger
-
-          */
-
-          // jk
-          $showErrorMessage = TRUE;
-          $errorType = 9;
-        }
-      }
-    }
-
-    if (!$showErrorMessage) {
-      // Data has been validated, continue (effing finally)
-
-      // FIRST: check if user exists
-      // SECOND: register user
-      // FINALLY: redirect user to find friends or so
-    }
-
-    // Error handling
+  function getErrorMessage($type) {
     $errorString = "";
 
-    switch ($errorType) {
+    switch ($type) {
       case 100:
         $errorString = 'error_database_connection';
+        break;
+
+      case 150:
+        $errorString = 'error_email_send';
         break;
 
       case 0:
@@ -216,6 +155,219 @@
       default:
         break;
     }
+
+    return $errorString;
+  }
+
+  // Registration Function
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
+    $phpErrorMessage .= "Form Method is POST<br>";
+
+    require_once $file_root . "database/config.php";
+
+    # REQUEST VARIABLES #
+
+    $Name_Request = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+    $Surname_Request = trim(filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING));
+    $Username_Request = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
+    // Idiot handling
+    $Username_Request = str_ireplace("@uclan.ac.uk", "", $Username_Request);
+    $Password_Request = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+
+    // More Variables
+    $BirthDay_Request = trim(filter_input(INPUT_POST, 'day', FILTER_SANITIZE_NUMBER_INT));
+    $BirthMonth_Request = trim(filter_input(INPUT_POST, 'month', FILTER_SANITIZE_STRING));
+    $BirthYear_Request = trim(filter_input(INPUT_POST, 'year', FILTER_SANITIZE_NUMBER_INT));
+
+    $Gender_Request = trim(filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_NUMBER_INT));
+
+    $Sent_Request = TRUE;
+
+    $phpErrorMessage .= "Variables From Request Read<br>";
+
+    # EMPTY REQUEST DETECTION #
+
+    if (empty($Name_Request) || empty($Surname_Request)) {
+      $showErrorMessage = TRUE;
+      $errorType = 1;
+    } else if (empty($Username_Request) || empty($Password_Request)) {
+      $showErrorMessage = TRUE;
+      $errorType = 2;
+    } else if (empty($BirthDay_Request) || empty($BirthMonth_Request) || empty($BirthYear_Request)){
+      $showErrorMessage = TRUE;
+      $errorType = 3;
+    }
+
+    # INVALID DATA VALIDATION #
+
+    if (!$showErrorMessage) {
+      $phpErrorMessage .= "Register form is not empty<br>";
+
+      $longMonthArray = [1, 3, 5, 7, 8, 10, 12];
+
+      // Detect Invalid Request Data
+      // Such as Invalid Usernames, Dates, etc
+      $Password_Length = strlen($Password_Request);
+
+      if ($Password_Length < 8) {
+        // Check pass length
+        $showErrorMessage = TRUE;
+        $errorType = 6;
+      } else if (!preg_match('/\d/', $Password_Request) && $Password_Length < 14) {
+        // Check password has at least one number
+        $showErrorMessage = TRUE;
+        $errorType = 7;
+      } else if (preg_match('/[^a-zA-Z0-9\-]/', $Username_Request)) {
+        // Check if username contains an invalid char
+        $showErrorMessage = TRUE;
+        $errorType = 5;
+      } else {
+        // Check valid birthday
+        if (!checkdate($BirthMonth_Request, $BirthDay_Request, $BirthYear_Request)){
+          $showErrorMessage = TRUE;
+          $errorType = 8;
+        } else if ($BirthYear_Request < 1900 || $BirthYear_Request > 2050){
+          $showErrorMessage = TRUE;
+          $errorType = 8;
+        } else if ($Gender_Request != 0 && $Gender_Request != 1) {
+          // Invalid gender through mischieving
+          $showErrorMessage = TRUE;
+          $errorType = 9;
+        }
+      }
+    }
+
+    # LOOKUP USER THEN REGISTER USER #
+
+    if (!$showErrorMessage) {
+      $phpErrorMessage .= "Data is valid<br>";
+
+      // Data has been validated, continue (effing finally)
+      if (function_exists('mysqli_connect')) {
+        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+      } else {
+        $Connection_SQL = FALSE;
+      }
+
+      // Check connection
+      if ($Connection_SQL !== FALSE) {
+        $phpErrorMessage .= "DB Connection was successful<br>";
+        // FIRST: check if user exists
+
+        // Lookup Username in DB
+        $userLookup_Query = "SELECT * FROM users WHERE Username = ?";
+
+        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
+          // Bind variables to the prepared statement as parameters
+          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+
+          // Set parameters
+          $User_Parameter = $Username_Request;
+
+          // Look For User In Case They Are Already Registered
+          if (mysqli_stmt_execute($Statement_SQL)) {
+            $phpErrorMessage .= "Retrieved Users<br>";
+
+              // Store result
+              mysqli_stmt_store_result($Statement_SQL);
+
+              // Check if username exists, if yes then verify password
+              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
+
+              if ($Rows_Result = 0){
+                $phpErrorMessage .= "User Is Not Taken<br>";
+                // Drop everything and register the damn bastard
+                // SECOND: register user
+                $userRegister_Query = "INSERT INTO users (Username, Password, Name, Surnames, Birthdate, Gender, VerifyToken) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+                if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userRegister_Query)) {
+                  $Birthdate = new DateTime();
+                  $Birthdate->setDate($BirthYear_Request, $BirthMonth_Request, $BirthDay_Request);
+                  $SQLDate = $Birthdate->format('Y-m-d');
+
+                  // Bind variables to the prepared statement as parameters
+                  mysqli_stmt_bind_param($Statement_SQL, "sssssis", $User_Parameter, $Password_Parameter, $Name_Parameter,
+                  $Surnames_Parameter, $Birthdate_Parameter, $Gender_Parameter, $Token_Parameter);
+
+                  $User_Parameter = $Username_Request;
+                  $Password_Parameter = $Password_Request;
+                  $Name_Parameter = $Name_Request;
+                  $Surnames_Parameter = $Surname_Request;
+                  $Birthdate_Parameter = $SQLDate;
+                  $Gender_Parameter = $Gender_Request;
+                  // Create random token to verify user
+                  $Token_Parameter = md5(uniqid(rand(), true));
+                  // You will also mail them this token lol
+
+                  // Save User Data In Database (No Need To Retrieve Results)
+                  if(mysqli_stmt_execute($Statement_SQL)){
+                    $sendMailOP = FALSE;
+                    $mailAttempts = 1;
+
+                    do {
+                      $sendMailOP = sendTokenMail($Name_Request, $Username_Request, $Token_Parameter);
+                      $mailAttempts++;
+                    } while (!$sendMailOP && $mailAttempts <= 3);
+
+                    if (!$sendMailOP) {
+                      // Token could not be sent. HELP!
+                      // Email Send Error
+                      $errorType = 150;
+                      $showErrorMessage = TRUE;
+                    } else {
+                      // Verification has been sent to the users' mailbox,
+                      // redirect or something lol
+
+                      // Password is correct
+                      // Store data in session variables
+                      $_SESSION['logged_in'] = TRUE;
+                      $_SESSION['username'] = $Username_Request;
+                      $_SESSION['name'] = $Name_Request;
+                      $_SESSION['surnames'] = $Surname_Request;
+                      $_SESSION['verified'] = FALSE;
+
+                      header("location: " . $file_root . "login/verify.php");
+                      exit;
+                    }
+                    // FINALLY: redirect user to find friends or so
+                    // Redirect to login page
+                    // USER IS REGISTERED
+                    // NOW: VERIFY USER
+                    // ALSO: CONTINUE REGISTRATION
+                  } else {
+                    // Database Error
+                    $errorType = 100;
+                    $showErrorMessage = TRUE;
+                  }
+                }
+
+                mysqli_stmt_close($Statement_SQL);
+                mysqli_close($Connection_SQL);
+
+              } else if ($Rows_Result > 0) {
+                // User Is Taken
+                $showErrorMessage = TRUE;
+                $errorType = 10;
+              }
+          } else {
+            // Database Error
+            $errorType = 100;
+            $showErrorMessage = TRUE;
+          }
+        }
+
+        mysqli_stmt_close($Statement_SQL);
+        mysqli_close($Connection_SQL);
+      } else {
+        // No MYSQL Installed (DB Error)
+        $errorType = 100;
+        $showErrorMessage = TRUE;
+      }
+    }
+
+    # ERROR HANDLING #
+
+    $errorString = getErrorMessage($errorType);
 
     if ($showErrorMessage) {
       $errorMessage = $main_strings[$errorString];

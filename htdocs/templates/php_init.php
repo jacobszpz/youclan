@@ -8,10 +8,8 @@
   # FUNCTIONS
 
   function getIP(){
-    // Probar si es un cliente compartido
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
       $ip = $_SERVER['HTTP_CLIENT_IP'];
-    // Es un proxy
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
       $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
     } else {
@@ -133,6 +131,22 @@
 
   if (isset($_SESSION['surnames'])) {
     $Surnames_Session = $_SESSION['surnames'];
+  }
+
+  $Verified_Session = FALSE;
+
+  // Check if Temporarily Logged In
+  if (isset($_SESSION['verified']) && $_SESSION["verified"] === TRUE) {
+    $Verified_Session = TRUE;
+  }
+
+  // Lost Account (needs to reestablish account)
+  // ALSO EQUIVALENT OF tempLoggedIn
+  $Lost_Session = FALSE;
+
+  // Check if Temporarily Logged In
+  if (isset($_SESSION['lost_account']) && $_SESSION["lost_account"] === TRUE) {
+    $Lost_Session = TRUE;
   }
 
   $current_title = $main_strings['website_title'];
