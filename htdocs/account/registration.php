@@ -17,7 +17,7 @@
   // To Test Logged In Redirect
   // $loggedIn = TRUE;
 
-  $debuggingActivated = FALSE;
+  $debuggingActivated = TRUE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   # USER LOGGED IN REDIRECT #
