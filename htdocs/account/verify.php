@@ -111,6 +111,7 @@
                       $_SESSION['verified'] = TRUE;
 
                       header("location: {$file_root}");
+                      exit;
                     } else {
                       $showDatabaseError = TRUE;
                     }
@@ -135,7 +136,6 @@
     $errorMessage = "";
   }
 ?>
-
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
