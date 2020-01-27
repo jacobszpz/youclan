@@ -291,7 +291,7 @@
                   $Surnames_Parameter, $Birthdate_Parameter, $Gender_Parameter, $Token_Parameter);
 
                   $User_Parameter = $Username_Request;
-                  $Password_Parameter = $Password_Request;
+                  $Password_Parameter = password_hash($Password_Request, PASSWORD_DEFAULT);
                   $Name_Parameter = $Name_Request;
                   $Surnames_Parameter = $Surname_Request;
                   $Birthdate_Parameter = $SQLDate;
