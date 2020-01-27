@@ -252,6 +252,7 @@
       // Check connection
       if ($Connection_SQL !== FALSE) {
         $phpErrorMessage .= "DB Connection was successful<br>";
+        mysqli_set_charset($Connection_SQL, "utf8");
         // FIRST: check if user exists
 
         // Lookup Username in DB

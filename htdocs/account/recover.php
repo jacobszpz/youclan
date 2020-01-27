@@ -78,6 +78,7 @@
       // Check connection
       if ($Connection_SQL !== FALSE) {
         $phpErrorMessage .= "DB Connection was successful<br>";
+        mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
         $userLookup_Query = "SELECT LostToken FROM users WHERE Username = ?";
