@@ -16,6 +16,7 @@
 
   // Since there is another Login form anyway
   $loginHeader = FALSE;
+  $registerHeader = TRUE;
 
   // To Test Logged In Redirect
   // $loggedIn = TRUE;

@@ -103,9 +103,11 @@
   }
 
   $loginHeader = TRUE;
+  $registerHeader = TRUE;
 
   if ($loggedIn) {
     $loginHeader = FALSE;
+    $registerHeader = FALSE;
   }
 
   $tempLoggedIn = FALSE;

@@ -18,7 +18,7 @@
         </div>
         <input type="submit" class="header-submit" name="" value="Log In">
       </div>
-    <?php } else { ?>
+    <?php } else if ($registerHeader) { ?>
       <a href="<?php echo $file_root; ?>account/registration.php" class="header-registration-link">
         <div class="header-registration">
           Create an account
