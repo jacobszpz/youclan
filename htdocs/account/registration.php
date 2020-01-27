@@ -17,7 +17,7 @@
   // To Test Logged In Redirect
   // $loggedIn = TRUE;
 
-  $debuggingActivated = TRUE;
+  $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   # USER LOGGED IN REDIRECT #
@@ -274,7 +274,7 @@
               // Check if username exists, if yes then verify password
               $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
 
-              if ($Rows_Result = 0){
+              if ($Rows_Result == 0){
                 $phpErrorMessage .= "User Is Not Taken<br>";
                 // Drop everything and register the damn bastard
                 // SECOND: register user
