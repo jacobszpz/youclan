@@ -516,10 +516,10 @@
                 <div class="register-gender">
                   <h4><?php echo $main_strings['register_gender']; ?></h4>
                   <input type="radio" name="gender" value="1" <?php if ($Gender_Request == 1) { echo "checked";} ?>>
-                  <span class="gender-radio">Female</span>
+                  <span class="gender-radio"><?php echo $main_strings['gender_female']; ?></span>
                   <br>
                   <input type="radio" name="gender" value="0" <?php if ($Gender_Request == 0) { echo "checked";} ?>>
-                  <span class="gender-radio">Male</span>
+                  <span class="gender-radio"><?php echo $main_strings['gender_male']; ?></span>
                 </div>
               </div>
               <input type="submit" class="header-submit" name="" value="<?php echo $main_strings['account_register_submit']; ?>">

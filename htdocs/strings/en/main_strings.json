@@ -1,5 +1,6 @@
 {
   "website_title": "youclan - Make friends at university",
+  "website_slogan": "Meet friends at university",
   "login_title": "Log into youclan",
   "register_title": "Create an account",
   "recover_title": "Recover your account",
@@ -19,6 +20,8 @@
   "birthday_month": "Month",
   "birthday_year": "Year",
   "register_gender": "Gender",
+  "gender_female": "Female",
+  "gender_male": "Male",
   "logo_caption": "Welcome to youclan",
   "logout_item": "Logout",
   "new_pass_title": "Set a new password",

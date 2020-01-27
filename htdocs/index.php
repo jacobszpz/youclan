@@ -10,6 +10,20 @@
   }
 
   include "{$file_root}templates/php_init.php";
+
+  // Do not show page if user is already verified or not logged in
+  if ($loggedIn) {
+    if ($Lost_Session) {
+      header("location: {$file_root}password/new.php");
+      exit;
+    } else if (!$Verified_Session) {
+      header("location: {$file_root}account/verify.php");
+      exit;
+    } else {
+      header("location: {$file_root}home.php");
+      exit;
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="ltr">
@@ -24,11 +38,11 @@
     <main class="main-no-padding">
       <div class="main-hero">
         <div class="hero-hover">
-          <h2 class="">Meet friends at uni</h2>
+          <h2 class=""><?php echo $main_strings['website_slogan']; ?></h2>
           <img class="main-leaves" src="<?php echo $file_root; ?>assets/leaves.png" alt="">
           <a class="no-underline" href="<?php echo $file_root; ?>account/registration.php">
             <div class="header-registration">
-              Create an account
+              <?php echo $main_strings['register_title']; ?>
             </div>
           </a>
         </div>
