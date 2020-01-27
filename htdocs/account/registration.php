@@ -326,6 +326,7 @@
                       $_SESSION['name'] = $Name_Request;
                       $_SESSION['surnames'] = $Surname_Request;
                       $_SESSION['verified'] = FALSE;
+                      $_SESSION['verify_token'] = $Token_Parameter;
 
                       header("location: " . $file_root . "account/verify.php");
                       exit;

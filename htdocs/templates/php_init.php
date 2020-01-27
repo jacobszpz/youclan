@@ -142,6 +142,13 @@
     $Verified_Session = TRUE;
   }
 
+  $Verify_Token = "";
+
+  // Check if Temporarily Logged In
+  if (!empty($_SESSION['verify_token'])) {
+    $Verify_Token = $_SESSION['verify_token'];
+  }
+
   // Lost Account (needs to reestablish account)
   // ALSO EQUIVALENT OF tempLoggedIn
   $Lost_Session = FALSE;

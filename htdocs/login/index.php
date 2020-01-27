@@ -74,7 +74,7 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount, LostAccount FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount, VerifyToken, LostAccount FROM users WHERE Username = ?";
 
         if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
           // Bind variables to the prepared statement as parameters
@@ -97,7 +97,7 @@
 
                 // Bind result variables
                 mysqli_stmt_bind_result($Statement_SQL, $Username_Result, $Password_Result,
-                $Name_Result, $Surnames_Result, $VerifiedAccount_Result, $LostAccount_Result);
+                $Name_Result, $Surnames_Result, $VerifiedAccount_Result, $VerifyToken_Result, $LostAccount_Result);
 
                 if (mysqli_stmt_fetch($Statement_SQL)){
                   $phpErrorMessage .= "Results Fetched<br>";
@@ -124,7 +124,8 @@
 
                     if ($VerifiedAccount_Result === 0) {
                       $_SESSION['verified'] = FALSE;
-                      header("location: " . $file_root . "login/verify.php");
+                      $_SESSION['verify_token'] = $VerifyToken_Result;
+                      header("location: " . $file_root . "account/verify.php");
                       exit;
                     } else {
                       $_SESSION['verified'] = TRUE;
