@@ -3,7 +3,7 @@
     <div class="main-header">
       <div class="header-logo">
         <a href="<?php echo $file_root; ?>">
-          <img src="<?php echo $file_root; ?>assets/youclan_v2.png" alt="<?php echo $main_strings['logo_caption']; ?>" class="main-logo">
+          <img src="<?php echo $file_root; ?>assets/youclan_v3.png" alt="<?php echo $main_strings['logo_caption']; ?>" class="main-logo">
         </a>
       </div>
     <?php if ($loginHeader) { ?>

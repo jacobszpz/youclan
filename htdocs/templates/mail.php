@@ -9,7 +9,7 @@
               display: inline-block;">
         </div> -->
         <div class="title" style="height: 100%; width: 100%;">
-          <img src="http://youclan.uk/assets/youclan_v2.png"
+          <img src="http://youclan.uk/assets/youclan_v3.png"
             alt="" style="max-width: 100%; height:100%;">
         </div>
       </div>
