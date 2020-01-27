@@ -36,6 +36,7 @@
   "account_remember": "Remember Me",
   "password_show": "Show Password",
   "account_verify_token": "Please input the token we sent to your UCLAN email address",
+  "account_send_email_again": "Or resend email",
   "account_recover_user": "Enter your username to recover your account",
   "account_forgot": "I Forgot My Password",
   "error_database_connection": "Server issues, try again later",

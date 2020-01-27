@@ -22,8 +22,8 @@
 
   // Do not show page if user is already verified or not logged in
   if (!$loggedIn) {
-    header("location: " . $file_root . "login");
-    exit;
+    //header("location: " . $file_root . "login");
+    //exit;
   } else {
     if ($Lost_Session) {
       header("location: " . $file_root . "password/new.php");
@@ -152,6 +152,7 @@
           <form class="" action="" method="get">
             <h4><?php echo $main_strings['account_verify_token']; ?></h4>
             <input type="text" class="small-form-input" name="token" value="">
+            <a href="#" class=""><?php echo $main_strings['account_send_email_again']; ?></a>
             <input type="submit" name="" class="header-submit small-form-submit" value="<?php echo $main_strings['account_verify']; ?>">
           </form>
         <?php } ?>
