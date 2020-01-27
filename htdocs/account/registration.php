@@ -327,7 +327,7 @@
                       $_SESSION['surnames'] = $Surname_Request;
                       $_SESSION['verified'] = FALSE;
 
-                      header("location: " . $file_root . "login/verify.php");
+                      header("location: " . $file_root . "account/verify.php");
                       exit;
                     }
                     // FINALLY: redirect user to find friends or so
