@@ -77,16 +77,16 @@
 
     $user_mail_body = file_get_contents($file_root . 'templates/mail.php');
     $user_mail_body = str_replace('MAIN_TEXT', file_get_contents($file_root . 'texts/mail/' . $lang . '_verify.txt'), $user_mail_body);
+    $user_mail_body = str_replace('DISCLAIMER_TEXT', file_get_contents($file_root . 'texts/mail/' . $lang .'_disclaimer.txt'), $user_mail_body);
     $user_mail_body = str_replace('NAME', $name, $user_mail_body);
     $user_mail_body = str_replace('MAIL', $email, $user_mail_body);
     $user_mail_body = str_replace('TOKEN', "$token", $user_mail_body);
-    $user_mail_body = str_replace('DISCLAIMER_TEXT', file_get_contents($file_root . 'texts/mail/' . $lang .'_disclaimer.txt'), $user_mail_body);
 
 
     $user_mail_reply_to = 'no-reply@youclan.uk';
     $user_mail_sender = 'no-reply@youclan.uk';
 
-    $user_mail_subject = $main_strings['mail_contact_subject'];
+    $user_mail_subject = $main_strings['mail_token_subject'];
 
     // To send HTML mail, the Content-type header must be set
     $mail_headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -372,7 +372,6 @@
     if ($showErrorMessage) {
       $errorMessage = $main_strings[$errorString];
     }
-
   }
 
 ?>
