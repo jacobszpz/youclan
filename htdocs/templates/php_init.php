@@ -97,7 +97,6 @@
 
   // Internal Testing
   if (strpos(__DIR__, "/home/jacobsp/WebDev/") !== false) {
-    // $loggedIn = TRUE;
     ini_set('display_errors', 1);
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
   }
@@ -159,5 +158,10 @@
   }
 
   $current_title = $main_strings['website_title'];
+
+  if (strpos(__DIR__, "/home/jacobsp/WebDev/") !== false) {
+    //$loggedIn = TRUE;
+    //$Verified_Session = TRUE;
+  }
 
 ?>
