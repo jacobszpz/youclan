@@ -2,10 +2,7 @@ Greetings,
 <br>
 You asked us to help you get your account back.
 <br>
-To get into your account again, please click on the link below:
-<br>
-<a href="https://youclan.uk/account/recover.php?token=TOKEN&user=USER">Recover Account</a>
-<br>
-Or enter the token TOKEN at https://youclan.uk/account/recover.php along with your username
+To get into your account again, enter the token TOKEN at
+https://youclan.uk/account/recover.php
 <br><br>
 We hope you get your account back soon.

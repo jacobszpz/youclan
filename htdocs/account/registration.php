@@ -330,10 +330,8 @@
               $errorType = 100;
               $showErrorMessage = TRUE;
             }
+            mysqli_stmt_close($Statement_SQL);
           }
-
-          mysqli_close($Connection_SQL);
-
         } else if ($Rows_Result > 0) {
           // User Is Taken
           $showErrorMessage = TRUE;

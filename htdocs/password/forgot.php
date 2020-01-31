@@ -128,6 +128,7 @@
               // Email Send Error
               $showDatabaseError = TRUE;
             } else {
+              $_SESSION['username'] = $Username_Result;
               header("location: {$file_root}account/recover.php");
               exit;
             }

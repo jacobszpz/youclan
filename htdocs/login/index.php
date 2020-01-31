@@ -74,7 +74,7 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount, VerifyToken, LostAccount FROM users WHERE Username = '$Username_Request'";
+        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
         $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
         $phpErrorMessage .= "Retrieved Users<br>";
