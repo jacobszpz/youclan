@@ -105,7 +105,7 @@ header {
 }
 
 /* Media Queries */
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .header-logo {
     margin: 0 auto;
   }
@@ -159,7 +159,7 @@ main {
 
 .hero-hover {
   display: none;
-  margin: 2em 0.5em;
+  margin: 4em 0.5em;
   flex-flow: column nowrap;
   align-items: center;
 }
