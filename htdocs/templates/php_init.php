@@ -109,13 +109,6 @@
     $registerHeader = FALSE;
   }
 
-  $tempLoggedIn = FALSE;
-
-  // Check if Temporarily Logged In
-  if (isset($_SESSION['temp_logged_in']) && $_SESSION["temp_logged_in"] === TRUE) {
-    $tempLoggedIn = TRUE;
-  }
-
   $Username_Session = "Default";
 
   if (isset($_SESSION['username'])) {

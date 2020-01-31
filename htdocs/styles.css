@@ -186,6 +186,10 @@ main {
   max-width: 600px;
 }
 
+.new-pass-center {
+  max-width: 500px;
+}
+
 .login-form-div {
   width: 100%;
   display: flex;
