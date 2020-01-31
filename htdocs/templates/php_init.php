@@ -150,6 +150,13 @@
     $Lost_Session = TRUE;
   }
 
+  $Setup_Session = FALSE;
+
+  // Check if Temporarily Logged In
+  if (isset($_SESSION['setup_account']) && $_SESSION["setup_account"] === TRUE) {
+    $Setup_Session = TRUE;
+  }
+
   $current_title = $main_strings['website_title'];
 
   if (strpos(__DIR__, "/home/jacobsp/WebDev/") !== false) {

@@ -27,16 +27,8 @@
   # USER LOGGED IN REDIRECT #
 
   if ($loggedIn) {
-    if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
-      exit;
-    } else if (!$Verified_Session) {
-      header("location: " . $file_root . "account/verify.php");
-      exit;
-    } else {
-      header("location: " . $file_root);
-      exit;
-    }
+    header("location: {$file_root}");
+    exit;
   }
 
   $showErrorMessage = FALSE;
@@ -102,6 +94,7 @@
             $VerifiedAccount_Result = $Row_SQL['VerifiedAccount'];
             $VerifyToken_Result = $Row_SQL['VerifyToken'];
             $LostAccount_Result = $Row_SQL['LostAccount'];
+            $SetupComplete_Result = $Row_SQL['SetupComplete'];
 
             $phpErrorMessage .= "Results Fetched<br>";
             $phpErrorMessage .= $NewAccount_Result . "<br>";
@@ -116,6 +109,7 @@
               $_SESSION['username'] = $Username_Result;
               $_SESSION['name'] = $Name_Result;
               $_SESSION['surnames'] = $Surnames_Result;
+              $_SESSION['setup_account'] = $SetupComplete_Result;
 
               // Account Had Been Lost At Some Point Before
               // User Has Been Able To Log Back In
@@ -128,12 +122,12 @@
               if ($VerifiedAccount_Result === 0) {
                 $_SESSION['verified'] = FALSE;
                 $_SESSION['verify_token'] = $VerifyToken_Result;
-                header("location: " . $file_root . "account/verify.php");
+                header("location: {$file_root}account/verify.php");
                 exit;
               } else {
                 $_SESSION['verified'] = TRUE;
                 // Redirect user to welcome page
-                header("location: " . $file_root);
+                header("location: {$file_root}");
                 exit;
               }
             }

@@ -23,16 +23,8 @@
   # USER LOGGED IN REDIRECT #
 
   if ($loggedIn) {
-    if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
-      exit;
-    } else if (!$Verified_Session) {
-      header("location: " . $file_root . "account/verify.php");
-      exit;
-    } else {
-      header("location: " . $file_root);
-      exit;
-    }
+    header("location: {$file_root}");
+    exit;
   }
 
   $showErrorMessage = FALSE;

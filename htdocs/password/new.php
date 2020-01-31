@@ -25,13 +25,8 @@
     exit;
   } else {
     if (!$Lost_Session) {
-      if (!$Verified_Session) {
-        header("location: " . $file_root . "account/verify.php");
-        exit;
-      } else {
-        header("location: " . $file_root);
-        exit;
-      }
+      header("location: {$file_root}");
+      exit;
     }
   }
 

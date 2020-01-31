@@ -20,7 +20,7 @@
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
-  // Do not show page if user is already verified or not logged in
+  // Do not show page if user is not logged in
   if (!$loggedIn) {
     header("location: " . $file_root . "login");
     exit;
@@ -31,6 +31,8 @@
     } else if (!$Verified_Session) {
       header("location: {$file_root}account/verify.php");
       exit;
+    } else if ($Setup_Session) {
+      header("location: {$file_root}");
     }
   }
 
@@ -46,10 +48,24 @@
 
   */
 
-  // We begin to check token provided
-  if (!empty($_GET)) {
+  function getErrorMessage($type) {
+    $errorString = "";
+
+    switch ($type) {
+      case 100:
+        $errorString = 'error_database_connection';
+        break;
+
+      default:
+        break;
+    }
+
+    return $errorString;
+  }
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     $showForm = FALSE;
-    $phpErrorMessage .= "Form Method is GET<br>";
+    $phpErrorMessage .= "Form Method is POST<br>";
 
     require_once $file_root . "database/config.php";
 
@@ -137,6 +153,14 @@
     }
   }
 
+  # ERROR HANDLING #
+
+  $errorString = getErrorMessage($errorType);
+
+  if ($showErrorMessage) {
+    $errorMessage = $main_strings[$errorString];
+  }
+
   if ($showDatabaseError) {
     $errorMessage = $main_strings['error_database_connection'];
   } if ($showForm) {
@@ -156,11 +180,8 @@
       <div class="main-center">
         <h2><?php echo $errorMessage; ?></h2>
         <?php if ($showForm) {?>
-          <form class="" action="" method="get">
-            <h4><?php echo $main_strings['account_verify_token']; ?></h4>
-            <input type="text" class="small-form-input" name="token" value="">
-            <a href="#" class=""><?php echo $main_strings['account_send_email_again']; ?></a>
-            <input type="submit" name="" class="header-submit small-form-submit" value="<?php echo $main_strings['account_verify']; ?>">
+          <form class="" action="" method="post">
+            <input type="submit" name="" class="header-submit small-form-submit" value="<?php echo $main_strings['account_save']; ?>">
           </form>
         <?php } ?>
       </div>
