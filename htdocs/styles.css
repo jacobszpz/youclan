@@ -191,7 +191,15 @@ main {
 }
 
 .setup-center {
-  max-width: 600px;
+  max-width: 400px;
+}
+
+.setup-main {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: center;
 }
 
 .setup-main > div {
@@ -266,7 +274,8 @@ main {
 .setup-select {
   margin-top: 0.4em;
   font-size: 1em;
-  max-width: 450px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .gender-radio {
