@@ -18,6 +18,7 @@
 
   if ($Connection_SQL !== FALSE && $Auth_Request == "PERHAPS") {
     foreach ($file as $key => $course) {
+      $course = trim($course);
 
       $courseInsertion_Query = "INSERT INTO courses (Name) VALUES ('$course')";
 

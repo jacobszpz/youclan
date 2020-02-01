@@ -190,6 +190,14 @@ main {
   max-width: 500px;
 }
 
+.setup-center {
+  max-width: 600px;
+}
+
+.setup-main > div {
+  padding-bottom: 1em;
+}
+
 .login-form-div {
   width: 100%;
   display: flex;
@@ -253,6 +261,12 @@ main {
 .reg-select {
   margin-top: 0.4em;
   font-size: 1em;
+}
+
+.setup-select {
+  margin-top: 0.4em;
+  font-size: 1em;
+  max-width: 450px;
 }
 
 .gender-radio {

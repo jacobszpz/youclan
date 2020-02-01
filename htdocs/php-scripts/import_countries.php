@@ -18,6 +18,7 @@
 
   if ($Connection_SQL !== FALSE && $Auth_Request == "PERHAPS") {
     foreach ($file as $key => $country) {
+      $country = trim($country);
 
       $countryInsertion_Query = "INSERT INTO countries (Name) VALUES ('$country')";
 

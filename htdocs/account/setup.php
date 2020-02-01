@@ -36,6 +36,11 @@
     }
   }
 
+  // We need database connection earlier due to retrieving values
+  // for country and courses dropdown
+  require_once "{$file_root}database/config.php";
+  require_once "{$file_root}database/conn.php";
+
   $showErrorMessage = TRUE;
   $showDatabaseError = FALSE;
   $errorType = 0;
@@ -63,27 +68,37 @@
     return $errorString;
   }
 
+  function printItems($tableName) {
+    global $Connection_SQL;
+    $item_Query = "SELECT * FROM $tableName";
+
+    $Query_SQL = mysqli_query($Connection_SQL, $item_Query);
+
+    while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+      print "\t\t\t\t<option value=\"{$Row_SQL['ID']}\">{$Row_SQL['Name']}</option>" . PHP_EOL;
+    }
+  }
+
+  $Lecturer_Request = 0;
+
   if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
-    $showForm = FALSE;
     $phpErrorMessage .= "Form Method is POST<br>";
 
-    require_once $file_root . "database/config.php";
-
     // Set Variables
-    $Token_Request = trim(filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING));
+    $Course_Request = trim(filter_input(INPUT_GET, 'course', FILTER_SANITIZE_STRING));
+    $CourseType_Request = trim(filter_input(INPUT_GET, 'course_type', FILTER_SANITIZE_STRING));
+    $Country_Request = trim(filter_input(INPUT_GET, 'country', FILTER_SANITIZE_NUMBER_INT));
+    $Lecturer_Request = trim(filter_input(INPUT_GET, 'lecturer', FILTER_SANITIZE_NUMBER_INT));
 
     $phpErrorMessage .= "Variables From Request Read<br>";
 
-    // If both variables present
-    if (!empty($Token_Request)) {
-      // Check if it matches database
-      $phpErrorMessage .= "Token is not empty<br>";
+    # DATA VALIDATION #
 
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+    // If both variables present
+    // TODO: CHANGE THIS CONDITIONAL
+    if (!empty($Token_Request) && FALSE) {
+      // Check if it matches database
+      $phpErrorMessage .= "Setup is not empty<br>";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {
@@ -91,61 +106,19 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT VerifyToken FROM users WHERE Username = ?";
+        $userSetup_Query = "UPDATE users SET
+        Country = '$Country_Request',
+        Course = '$Course_Request',
+        CourseType = '$CourseType_Request',
+        StartYear = '$StartYear_Request',
+        Lecturer = '$Lecturer',
+        SetupComplete = 1 WHERE Username = '$Username_Session'";
 
-        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
-          // Bind variables to the prepared statement as parameters
-          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+        $Query_SQL = mysqli_query($Connection_SQL, $userSetup_Query);
 
-          // Set parameters
-          $User_Parameter = $Username_Session;
+        $phpErrorMessage .= "Performed User Setup Query<br>";
 
-          // Attempt to execute the prepared statement
-          if (mysqli_stmt_execute($Statement_SQL)) {
-            $phpErrorMessage .= "Retrieved Users<br>";
-
-              // Store result
-              mysqli_stmt_store_result($Statement_SQL);
-
-              // Check if username exists, if yes then verify password
-              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
-              if ($Rows_Result == 1){
-                $phpErrorMessage .= "One User Was Found<br>";
-
-                // Bind result variables
-                mysqli_stmt_bind_result($Statement_SQL, $Token_Result);
-
-                if (mysqli_stmt_fetch($Statement_SQL)){
-                  $phpErrorMessage .= "Results Fetched<br>";
-
-                  // Check token
-                  if($Token_Request = $Token_Result){
-                    $phpErrorMessage .= "Token Matches (yay)<br>";
-
-                    // Token is correct
-                    // Store data in session variables
-                    // FINALLY, UPDATE SQL DB
-
-                    $updateToken_Query = "UPDATE users SET VerifiedAccount = 1, VerifyToken = NULL WHERE Username = '$Username_Session'";
-                    $dbTokenUpdate = mysqli_query($Connection_SQL, $updateToken_Query);
-
-                    if ($dbTokenUpdate) {
-                      $phpErrorMessage .= "Token Deleted and Account Verified in DB";
-                      $_SESSION['verified'] = TRUE;
-
-                      header("location: {$file_root}");
-                      exit;
-                    } else {
-                      $showDatabaseError = TRUE;
-                    }
-                  }
-                }
-              }
-          } else {
-            $showDatabaseError = TRUE;
-          }
-        }
-        mysqli_stmt_close($Statement_SQL);
+        // Only close connection if user won't be showed form again
         mysqli_close($Connection_SQL);
       } else {
         $showDatabaseError = TRUE;
@@ -163,9 +136,8 @@
 
   if ($showDatabaseError) {
     $errorMessage = $main_strings['error_database_connection'];
-  } if ($showForm) {
-    $errorMessage = "";
   }
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="ltr">
@@ -177,14 +149,48 @@
       <?php include "{$file_root}templates/header.php"; ?>
     </header>
     <main>
-      <div class="main-center">
-        <h2><?php echo $errorMessage; ?></h2>
-        <?php if ($showForm) {?>
-          <form class="" action="" method="post">
+      <form class="" action="" method="post">
+        <div class="main-center setup-center">
+          <?php if ($debuggingActivated) {
+              echo '<p class="php-debug">' . $phpErrorMessage . '</p>';
+          } ?>
+          <h1><?php echo $main_strings['account_setup']; ?></h1>
+          <?php
+            if ($showErrorMessage){
+              echo '<span id="login-error-message">' . $errorMessage . '</span>';
+            }
+          ?>
+          <div class="setup-main">
+            <div class="setup-lecturer">
+              <h4><?php echo $main_strings['setup_lecturer']; ?></h4>
+              <input type="radio" name="lecturer" value="1" <?php if ($Lecturer_Request == 1) { echo "checked";} ?>>
+              <span class="lecturer-radio"><?php echo $main_strings['setup_l_lecturer']; ?></span>
+              <br>
+              <input type="radio" name="lecturer" value="0" <?php if ($Lecturer_Request == 0) { echo "checked";} ?>>
+              <span class="lecturer-radio"><?php echo $main_strings['setup_l_student']; ?></span>
+            </div>
+            <div class="setup-country">
+              <h4><?php echo $main_strings['setup_country']; ?></h4>
+              <select class="setup-select" name="country">
+                <?php printItems("countries"); ?>
+              </select>
+            </div>
+            <div class="setup-course-type">
+              <h4><?php echo $main_strings['setup_course_type']; ?></h4>
+              <select class="setup-select" name="course_types">
+                <?php printItems("course_types"); ?>
+              </select>
+            </div>
+            <div class="setup-course">
+              <h4><?php echo $main_strings['setup_course']; ?></h4>
+              <select class="setup-select" name="courses">
+                <?php printItems("courses"); ?>
+              </select>
+            </div>
             <input type="submit" name="" class="header-submit small-form-submit" value="<?php echo $main_strings['account_save']; ?>">
-          </form>
-        <?php } ?>
-      </div>
+          </div>
+        </div>
+      </form>
     </main>
     <footer>
       <?php include "{$file_root}templates/footer.php"; ?>

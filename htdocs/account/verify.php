@@ -44,7 +44,7 @@
     $showForm = FALSE;
     $phpErrorMessage .= "Form Method is GET<br>";
 
-    require_once $file_root . "database/config.php";
+    require_once "{$file_root}database/config.php";
 
     // Set Variables
     $Token_Request = trim(filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING));
@@ -56,11 +56,7 @@
       // Check if it matches database
       $phpErrorMessage .= "Token is not empty<br>";
 
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+      require_once "{$file_root}database/conn.php";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {
