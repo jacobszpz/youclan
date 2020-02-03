@@ -8,4 +8,5 @@ $(function(){
     $(".hero-hover").fadeIn();
   }, function() {
     //$(".hero-hover").fadeOut();
-  }); });
+  });
+});

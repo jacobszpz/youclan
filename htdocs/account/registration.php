@@ -256,7 +256,8 @@
           $phpErrorMessage .= "User Is Not Taken<br>";
           // Drop everything and register the damn bastard
           // SECOND: register user
-          $userRegister_Query = "INSERT INTO users (Username, Password, Name, Surnames, Birthdate, Gender, VerifyToken) VALUES (?, ?, ?, ?, ?, ?, ?)";
+          $userRegister_Query = "INSERT INTO users (Username, Password, Name, Surnames,
+            Birthdate, Gender, VerifyToken) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
           if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userRegister_Query)) {
             $Birthdate = new DateTime();
