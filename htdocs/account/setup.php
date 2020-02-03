@@ -121,6 +121,7 @@
     $Picture_Request = $_FILES['picture'];
     $PictureName = trim(filter_var($Picture_Request['name'], FILTER_SANITIZE_STRING));
     $PictureTmpName = trim(filter_var($Picture_Request['tmp_name'], FILTER_SANITIZE_STRING));
+
     $FileType = trim(filter_var($Picture_Request['type'], FILTER_SANITIZE_STRING));
     $FileSize = (int) filter_var($Picture_Request['size'], FILTER_SANITIZE_NUMBER_INT);
     $FileCode = (int) filter_var($Picture_Request['error'], FILTER_SANITIZE_NUMBER_INT);
@@ -279,7 +280,7 @@
       <?php include "{$file_root}templates/header.php"; ?>
     </header>
     <main>
-      <form id="setup-form" action="" method="post">
+      <form id="setup-form" action="" enctype="multipart/form-data" method="post">
         <div class="main-center setup-center">
           <?php if ($debuggingActivated) {
               echo '<p class="php-debug">' . $phpErrorMessage . '</p>';
