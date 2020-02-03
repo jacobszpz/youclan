@@ -17,7 +17,7 @@
   // To Test Logged In Redirect
   // $loggedIn = TRUE;
 
-  $debuggingActivated = FALSE;
+  $debuggingActivated = TRUE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   // Do not show page if user is not logged in
@@ -62,11 +62,24 @@
     $errorString = "";
 
     switch ($type) {
-      case 100:
-        $errorString = 'error_database_connection';
+      case 1:
+        $errorString = 'error_lecturer_invalid';
         break;
 
-      default:
+      case 2:
+        $errorString = 'error_values_not_integers';
+        break;
+
+      case 3:
+        $errorString = 'error_values_range';
+        break;
+
+      case 4:
+        $errorString = 'error_file_upload';
+        break;
+
+      case 100:
+        $errorString = 'error_database_connection';
         break;
     }
 
@@ -99,18 +112,18 @@
     $formSent = TRUE;
 
     // Set Variables
-    $Course_Request = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_NUMBER_INT);
-    $CourseType_Request = filter_input(INPUT_POST, 'course_type', FILTER_SANITIZE_NUMBER_INT);
-    $Country_Request = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_NUMBER_INT);
-    $Lecturer_Request = filter_input(INPUT_POST, 'lecturer', FILTER_SANITIZE_NUMBER_INT);
-    $StartYear_Request = filter_input(INPUT_POST, 'start_year', FILTER_SANITIZE_NUMBER_INT);
+    $Course_Request = (int) filter_input(INPUT_POST, 'course', FILTER_SANITIZE_NUMBER_INT);
+    $CourseType_Request = (int) filter_input(INPUT_POST, 'course_type', FILTER_SANITIZE_NUMBER_INT);
+    $Country_Request = (int) filter_input(INPUT_POST, 'country', FILTER_SANITIZE_NUMBER_INT);
+    $Lecturer_Request = (int) filter_input(INPUT_POST, 'lecturer', FILTER_SANITIZE_NUMBER_INT);
+    $StartYear_Request = (int) filter_input(INPUT_POST, 'start_year', FILTER_SANITIZE_NUMBER_INT);
 
     $Picture_Request = $_FILES['picture'];
     $PictureName = trim(filter_var($Picture_Request['name'], FILTER_SANITIZE_STRING));
     $PictureTmpName = trim(filter_var($Picture_Request['tmp_name'], FILTER_SANITIZE_STRING));
     $FileType = trim(filter_var($Picture_Request['type'], FILTER_SANITIZE_STRING));
-    $FileSize = filter_var($Picture_Request['size'], FILTER_SANITIZE_NUMBER_INT);
-    $FileCode = filter_var($Picture_Request['error'], FILTER_SANITIZE_NUMBER_INT);
+    $FileSize = (int) filter_var($Picture_Request['size'], FILTER_SANITIZE_NUMBER_INT);
+    $FileCode = (int) filter_var($Picture_Request['error'], FILTER_SANITIZE_NUMBER_INT);
 
     $phpErrorMessage .= "Variables From Request Read<br>";
 
