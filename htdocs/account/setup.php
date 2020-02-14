@@ -195,7 +195,7 @@
         $NewFilename = md5(uniqid(rand(), true));
         $FileChecksum = hash_file("sha256", $PictureTmpName);
 
-        if (move_uploaded_file($PictureTmpName, "$file_root../uploads/$NewFilename")) {
+        if (move_uploaded_file($PictureTmpName, "{$file_root}uploads/$NewFilename")) {
           $phpErrorMessage .= "Upload moved under new secret name<br>";
 
           $newUploadQuery = "INSERT INTO uploads
