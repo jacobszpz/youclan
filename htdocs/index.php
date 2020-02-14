@@ -31,7 +31,7 @@
     <?php include "{$file_root}templates/head.php"; ?>
     <script src="<?php print $file_root; ?>scripts/index.js"></script>
   </head>
-  <body>
+  <body onscroll="showCounter()">
     <header>
       <?php include "{$file_root}templates/header.php"; ?>
     </header>
@@ -46,6 +46,10 @@
             </div>
           </a>
         </div>
+      </div>
+      <div class="main-counter">
+        <h2 id="main-counter">9999</h2>
+        <span class="">students can't be wrong</span>
       </div>
     </main>
     <footer>
