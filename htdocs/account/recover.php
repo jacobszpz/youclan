@@ -56,10 +56,9 @@
     $showForm = FALSE;
     $phpErrorMessage .= "Form Method is GET<br>";
 
-    require_once $file_root . "database/config.php";
+    require_once "{$file_root}database/config.php";
 
     // Set Variables
-    $Username_Request = trim(filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING));
     $Token_Request = trim(filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING));
 
     $phpErrorMessage .= "Variables From Request Read<br>";
@@ -69,11 +68,7 @@
       // Check if it matches database
       $phpErrorMessage .= "Token is not empty<br>";
 
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+      require_once "{$file_root}database/conn.php";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {
@@ -81,62 +76,56 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT LostToken FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Session'";
+        $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
-        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
-          // Bind variables to the prepared statement as parameters
-          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+        $phpErrorMessage .= "Retrieved Users<br>";
 
-          // Set parameters
-          $User_Parameter = $Username_Request;
+        // Check if username exists, if yes then verify password
+        $Rows_Result = mysqli_num_rows($Query_SQL);
 
-          // Attempt to execute the prepared statement
-          if (mysqli_stmt_execute($Statement_SQL)) {
-            $phpErrorMessage .= "Retrieved Users<br>";
+        if ($Rows_Result == 1){
+          $phpErrorMessage .= "One User Was Found<br>";
 
-              // Store result
-              mysqli_stmt_store_result($Statement_SQL);
+          if ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+            $phpErrorMessage .= "Results Fetched<br>";
 
-              // Check if username exists, if yes then verify password
-              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
-              if ($Rows_Result == 1){
-                $phpErrorMessage .= "One User Was Found<br>";
+            $Username_Result = $Row_SQL['Username'];
+            $Password_Result = $Row_SQL['Password'];
+            $Name_Result = $Row_SQL['Name'];
+            $Surnames_Result = $Row_SQL['Surnames'];
+            $VerifiedAccount_Result = $Row_SQL['VerifiedAccount'];
+            $VerifyToken_Result = $Row_SQL['VerifyToken'];
+            $LostToken_Result = $Row_SQL['LostToken'];
 
-                // Bind result variables
-                mysqli_stmt_bind_result($Statement_SQL, $Token_Result);
+            // Check token
+            if($Token_Request = $LostToken_Result){
+              $phpErrorMessage .= "Token Matches (yay)<br>";
 
-                if (mysqli_stmt_fetch($Statement_SQL)){
-                  $phpErrorMessage .= "Results Fetched<br>";
+              // Token is correct
+              // Store data in session variables
+              // FINALLY, UPDATE SQL DB
 
-                  // Check token
-                  if($Token_Request = $Token_Result){
-                    $phpErrorMessage .= "Token Matches (yay)<br>";
+              $updateToken_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Session'";
+              $dbTokenUpdate = mysqli_query($Connection_SQL, $updateToken_Query);
 
-                    // Token is correct
-                    // Store data in session variables
-                    // FINALLY, UPDATE SQL DB
+              if ($dbTokenUpdate) {
+                $phpErrorMessage .= "Token Deleted and Account Verified in DB";
 
-                    $updateToken_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Request'";
-                    $dbTokenUpdate = mysqli_query($Connection_SQL, $updateToken_Query);
+                $_SESSION['logged_in'] = TRUE;
+                $_SESSION['username'] = $Username_Result;
+                $_SESSION['name'] = $Name_Result;
+                $_SESSION['surnames'] = $Surnames_Result;
+                $_SESSION['lost_account'] = TRUE;
+                $_SESSION['verified'] = TRUE;
 
-                    if ($dbTokenUpdate) {
-                      $phpErrorMessage .= "Token Deleted and Account Verified in DB";
-                      $_SESSION['lost_account'] = TRUE;
-                      $_SESSION['username'] = $Username_Request;
-                      $_SESSION['verified'] = TRUE;
-
-                      header("location: {$file_root}password/new.php");
-                    } else {
-                      $showDatabaseError = TRUE;
-                    }
-                  }
-                }
+                header("location: {$file_root}password/new.php");
+              } else {
+                $showDatabaseError = TRUE;
               }
-          } else {
-            $showDatabaseError = TRUE;
+            }
           }
         }
-        mysqli_stmt_close($Statement_SQL);
         mysqli_close($Connection_SQL);
       } else {
         $showDatabaseError = TRUE;

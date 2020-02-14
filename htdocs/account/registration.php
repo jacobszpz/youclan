@@ -23,16 +23,8 @@
   # USER LOGGED IN REDIRECT #
 
   if ($loggedIn) {
-    if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
-      exit;
-    } else if (!$Verified_Session) {
-      header("location: " . $file_root . "account/verify.php");
-      exit;
-    } else {
-      header("location: " . $file_root);
-      exit;
-    }
+    header("location: {$file_root}");
+    exit;
   }
 
   $showErrorMessage = FALSE;
@@ -163,7 +155,7 @@
   if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     $phpErrorMessage .= "Form Method is POST<br>";
 
-    require_once $file_root . "database/config.php";
+    require_once "{$file_root}database/config.php";
 
     # REQUEST VARIABLES #
 
@@ -243,11 +235,7 @@
       $phpErrorMessage .= "Data is valid<br>";
 
       // Data has been validated, continue (effing finally)
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+      require_once "{$file_root}database/conn.php";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {
@@ -256,109 +244,89 @@
         // FIRST: check if user exists
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT * FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
+        $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
-        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
-          // Bind variables to the prepared statement as parameters
-          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+        $phpErrorMessage .= "Retrieved Users<br>";
 
-          // Set parameters
-          $User_Parameter = $Username_Request;
+        // Check if username exists, if yes then verify password
+        $Rows_Result = mysqli_num_rows($Query_SQL);
 
-          // Look For User In Case They Are Already Registered
-          if (mysqli_stmt_execute($Statement_SQL)) {
-            $phpErrorMessage .= "Retrieved Users<br>";
+        if ($Rows_Result == 0){
+          $phpErrorMessage .= "User Is Not Taken<br>";
+          // Drop everything and register the damn bastard
+          // SECOND: register user
+          $userRegister_Query = "INSERT INTO users (Username, Password, Name, Surnames,
+            Birthdate, Gender, VerifyToken) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-              // Store result
-              mysqli_stmt_store_result($Statement_SQL);
+          if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userRegister_Query)) {
+            $Birthdate = new DateTime();
+            $Birthdate->setDate($BirthYear_Request, $BirthMonth_Request, $BirthDay_Request);
+            $SQLDate = $Birthdate->format('Y-m-d');
 
-              // Check if username exists, if yes then verify password
-              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($Statement_SQL, "sssssis", $User_Parameter, $Password_Parameter, $Name_Parameter,
+            $Surnames_Parameter, $Birthdate_Parameter, $Gender_Parameter, $Token_Parameter);
 
-              if ($Rows_Result == 0){
-                $phpErrorMessage .= "User Is Not Taken<br>";
-                // Drop everything and register the damn bastard
-                // SECOND: register user
-                $userRegister_Query = "INSERT INTO users (Username, Password, Name, Surnames, Birthdate, Gender, VerifyToken) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $User_Parameter = $Username_Request;
+            $Password_Parameter = password_hash($Password_Request, PASSWORD_DEFAULT);
+            $Name_Parameter = $Name_Request;
+            $Surnames_Parameter = $Surname_Request;
+            $Birthdate_Parameter = $SQLDate;
+            $Gender_Parameter = $Gender_Request;
+            // Create random token to verify user
+            $Token_Parameter = md5(uniqid(rand(), true));
+            // You will also mail them this token lol
 
-                if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userRegister_Query)) {
-                  $Birthdate = new DateTime();
-                  $Birthdate->setDate($BirthYear_Request, $BirthMonth_Request, $BirthDay_Request);
-                  $SQLDate = $Birthdate->format('Y-m-d');
+            // Save User Data In Database (No Need To Retrieve Results)
+            if(mysqli_stmt_execute($Statement_SQL)){
+              $sendMailOP = FALSE;
+              $mailAttempts = 1;
 
-                  // Bind variables to the prepared statement as parameters
-                  mysqli_stmt_bind_param($Statement_SQL, "sssssis", $User_Parameter, $Password_Parameter, $Name_Parameter,
-                  $Surnames_Parameter, $Birthdate_Parameter, $Gender_Parameter, $Token_Parameter);
+              do {
+                $sendMailOP = sendTokenMail($Name_Request, $Username_Request, $Token_Parameter);
+                $mailAttempts++;
+              } while (!$sendMailOP && $mailAttempts <= 3);
 
-                  $User_Parameter = $Username_Request;
-                  $Password_Parameter = password_hash($Password_Request, PASSWORD_DEFAULT);
-                  $Name_Parameter = $Name_Request;
-                  $Surnames_Parameter = $Surname_Request;
-                  $Birthdate_Parameter = $SQLDate;
-                  $Gender_Parameter = $Gender_Request;
-                  // Create random token to verify user
-                  $Token_Parameter = md5(uniqid(rand(), true));
-                  // You will also mail them this token lol
-
-                  // Save User Data In Database (No Need To Retrieve Results)
-                  if(mysqli_stmt_execute($Statement_SQL)){
-                    $sendMailOP = FALSE;
-                    $mailAttempts = 1;
-
-                    do {
-                      $sendMailOP = sendTokenMail($Name_Request, $Username_Request, $Token_Parameter);
-                      $mailAttempts++;
-                    } while (!$sendMailOP && $mailAttempts <= 3);
-
-                    if (!$sendMailOP) {
-                      // Token could not be sent. HELP!
-                      // Email Send Error
-                      $errorType = 150;
-                      $showErrorMessage = TRUE;
-                    } else {
-                      // Verification has been sent to the users' mailbox,
-                      // redirect or something lol
-
-                      // Password is correct
-                      // Store data in session variables
-                      $_SESSION['logged_in'] = TRUE;
-                      $_SESSION['username'] = $Username_Request;
-                      $_SESSION['name'] = $Name_Request;
-                      $_SESSION['surnames'] = $Surname_Request;
-                      $_SESSION['verified'] = FALSE;
-                      $_SESSION['verify_token'] = $Token_Parameter;
-
-                      header("location: " . $file_root . "account/verify.php");
-                      exit;
-                    }
-                    // FINALLY: redirect user to find friends or so
-                    // Redirect to login page
-                    // USER IS REGISTERED
-                    // NOW: VERIFY USER
-                    // ALSO: CONTINUE REGISTRATION
-                  } else {
-                    // Database Error
-                    $errorType = 100;
-                    $showErrorMessage = TRUE;
-                  }
-                }
-
-                mysqli_stmt_close($Statement_SQL);
-                mysqli_close($Connection_SQL);
-
-              } else if ($Rows_Result > 0) {
-                // User Is Taken
+              if (!$sendMailOP) {
+                // Token could not be sent. HELP!
+                // Email Send Error
+                $errorType = 150;
                 $showErrorMessage = TRUE;
-                $errorType = 10;
-              }
-          } else {
-            // Database Error
-            $errorType = 100;
-            $showErrorMessage = TRUE;
-          }
-        }
+              } else {
+                // Verification has been sent to the users' mailbox,
+                // redirect or something lol
 
-        mysqli_stmt_close($Statement_SQL);
+                // Password is correct
+                // Store data in session variables
+                $_SESSION['logged_in'] = TRUE;
+                $_SESSION['username'] = $Username_Request;
+                $_SESSION['name'] = $Name_Request;
+                $_SESSION['surnames'] = $Surname_Request;
+                $_SESSION['verified'] = FALSE;
+                $_SESSION['verify_token'] = $Token_Parameter;
+                $_SESSION['setup_account'] = FALSE;
+
+                header("location: " . $file_root . "account/verify.php");
+                exit;
+              }
+              // FINALLY: redirect user to find friends or so
+              // Redirect to login page
+              // USER IS REGISTERED
+              // NOW: VERIFY USER
+              // ALSO: CONTINUE REGISTRATION
+            } else {
+              // Database Error
+              $errorType = 100;
+              $showErrorMessage = TRUE;
+            }
+            mysqli_stmt_close($Statement_SQL);
+          }
+        } else if ($Rows_Result > 0) {
+          // User Is Taken
+          $showErrorMessage = TRUE;
+          $errorType = 10;
+        }
         mysqli_close($Connection_SQL);
       } else {
         // No MYSQL Installed (DB Error)
@@ -375,7 +343,6 @@
       $errorMessage = $main_strings[$errorString];
     }
   }
-
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="ltr">

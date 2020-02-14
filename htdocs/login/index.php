@@ -27,16 +27,8 @@
   # USER LOGGED IN REDIRECT #
 
   if ($loggedIn) {
-    if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
-      exit;
-    } else if (!$Verified_Session) {
-      header("location: " . $file_root . "account/verify.php");
-      exit;
-    } else {
-      header("location: " . $file_root);
-      exit;
-    }
+    header("location: {$file_root}");
+    exit;
   }
 
   $showErrorMessage = FALSE;
@@ -50,7 +42,7 @@
     $phpErrorMessage .= "Form Method is POST<br>";
     $showLoginError = TRUE;
 
-    require_once $file_root . "database/config.php";
+    require_once "{$file_root}database/config.php";
 
     // Set Variables
     $Username_Request = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
@@ -62,11 +54,7 @@
     if (!empty($Username_Request) && !empty($Password_Request)) {
       $phpErrorMessage .= "Login is not empty<br>";
 
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+      require_once "{$file_root}database/conn.php";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {
@@ -74,76 +62,77 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT Username, Password, Name, Surnames, VerifiedAccount, VerifyToken, LostAccount FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
+        $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
-        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
-          // Bind variables to the prepared statement as parameters
-          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+        $phpErrorMessage .= "Retrieved Users<br>";
 
-          // Set parameters
-          $User_Parameter = $Username_Request;
+        // Check if username exists, if yes then verify password
+        $Rows_Result = mysqli_num_rows($Query_SQL);
 
-          // Attempt to execute the prepared statement
-          if (mysqli_stmt_execute($Statement_SQL)) {
-            $phpErrorMessage .= "Retrieved Users<br>";
+        if ($Rows_Result == 1) {
+          $phpErrorMessage .= "One User Was Found<br>";
 
-              // Store result
-              mysqli_stmt_store_result($Statement_SQL);
+          if ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+            /*
+              // Bind result variables
+              mysqli_bind_result($Query_SQL, $Username_Result, $Password_Result,
+              $Name_Result, $Surnames_Result, $VerifiedAccount_Result,
+              $VerifyToken_Result, $LostAccount_Result);
 
-              // Check if username exists, if yes then verify password
-              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
-              if ($Rows_Result == 1){
-                $phpErrorMessage .= "One User Was Found<br>";
+              Fix for new, simpler approach to this shit
+            */
 
-                // Bind result variables
-                mysqli_stmt_bind_result($Statement_SQL, $Username_Result, $Password_Result,
-                $Name_Result, $Surnames_Result, $VerifiedAccount_Result, $VerifyToken_Result, $LostAccount_Result);
+            $Username_Result = $Row_SQL['Username'];
+            $Password_Result = $Row_SQL['Password'];
+            $Name_Result = $Row_SQL['Name'];
+            $Surnames_Result = $Row_SQL['Surnames'];
+            $VerifiedAccount_Result = $Row_SQL['VerifiedAccount'];
+            $VerifyToken_Result = $Row_SQL['VerifyToken'];
+            $LostAccount_Result = $Row_SQL['LostAccount'];
+            $SetupComplete_Result = $Row_SQL['SetupComplete'];
 
-                if (mysqli_stmt_fetch($Statement_SQL)){
-                  $phpErrorMessage .= "Results Fetched<br>";
-                  $phpErrorMessage .= $NewAccount_Result . "<br>";
+            $phpErrorMessage .= "Results Fetched<br>";
+            $phpErrorMessage .= $NewAccount_Result . "<br>";
 
-                  // Check password
-                  if(password_verify($Password_Request, $Password_Result)){
-                    $phpErrorMessage .= "Password Matches<br>";
+            // Check password
+            if(password_verify($Password_Request, $Password_Result)){
+              $phpErrorMessage .= "Password Matches<br>";
 
-                    // Password is correct
-                    // Store data in session variables
-                    $_SESSION['logged_in'] = TRUE;
-                    $_SESSION['username'] = $Username_Result;
-                    $_SESSION['name'] = $Name_Result;
-                    $_SESSION['surnames'] = $Surnames_Result;
+              // Password is correct
+              // Store data in session variables
+              $_SESSION['logged_in'] = TRUE;
+              $_SESSION['username'] = $Username_Result;
+              $_SESSION['name'] = $Name_Result;
+              $_SESSION['surnames'] = $Surnames_Result;
+              $_SESSION['setup_account'] = $SetupComplete_Result;
 
-                    // Account Had Been Lost At Some Point Before
-                    // User Has Been Able To Log Back In
-                    // Therefore, Delete Token And Account Flag
-                    if ($LostAccount_Result === 1) {
-                      $lostStatusReset_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Result'";
-                      $dbLostUpdate = mysqli_query($Connection_SQL, $lostStatusReset_Query);
-                    }
-
-                    if ($VerifiedAccount_Result === 0) {
-                      $_SESSION['verified'] = FALSE;
-                      $_SESSION['verify_token'] = $VerifyToken_Result;
-                      header("location: " . $file_root . "account/verify.php");
-                      exit;
-                    } else {
-                      $_SESSION['verified'] = TRUE;
-                      // Redirect user to welcome page
-                      header("location: " . $file_root);
-                      exit;
-                    }
-                  }
-                }
-              } else if ($Rows_Result == 0) {
-                $showLoginError = FALSE;
-                $showUserError = TRUE;
+              // Account Had Been Lost At Some Point Before
+              // User Has Been Able To Log Back In
+              // Therefore, Delete Token And Account Flag
+              if ($LostAccount_Result === 1) {
+                $lostStatusReset_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Result'";
+                $dbLostUpdate = mysqli_query($Connection_SQL, $lostStatusReset_Query);
               }
-          } else {
-            $showDatabaseError = TRUE;
+
+              if ($VerifiedAccount_Result === 0) {
+                $_SESSION['verified'] = FALSE;
+                $_SESSION['verify_token'] = $VerifyToken_Result;
+                header("location: {$file_root}account/verify.php");
+                exit;
+              } else {
+                $_SESSION['verified'] = TRUE;
+                // Redirect user to welcome page
+                header("location: {$file_root}");
+                exit;
+              }
+            }
           }
+        } else if ($Rows_Result == 0) {
+          $showLoginError = FALSE;
+          $showUserError = TRUE;
         }
-        mysqli_stmt_close($Statement_SQL);
+
         mysqli_close($Connection_SQL);
       } else {
         $showDatabaseError = TRUE;
@@ -202,7 +191,7 @@
                 <span id="password-show-span"><?php echo $main_strings['password_show']; ?></span>
                 <input type="checkbox" name="show" value="" onclick="togglePasswordShow()" class="site-login-checkbox">
               </div>
-              <a href="<?php echo "{$file_root}account/recover.php" ?>"><?php echo $main_strings['account_forgot']; ?></a>
+              <a href="<?php echo "{$file_root}password/forgot.php" ?>"><?php echo $main_strings['account_forgot']; ?></a>
               <input type="submit" class="header-submit" name="" value="<?php echo $main_strings['account_login']; ?>">
             </div>
         </div>

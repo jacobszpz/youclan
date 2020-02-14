@@ -97,7 +97,6 @@
 
   // Internal Testing
   if (strpos(__DIR__, "/home/jacobsp/WebDev/") !== false) {
-    // $loggedIn = TRUE;
     ini_set('display_errors', 1);
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
   }
@@ -108,13 +107,6 @@
   if ($loggedIn) {
     $loginHeader = FALSE;
     $registerHeader = FALSE;
-  }
-
-  $tempLoggedIn = FALSE;
-
-  // Check if Temporarily Logged In
-  if (isset($_SESSION['temp_logged_in']) && $_SESSION["temp_logged_in"] === TRUE) {
-    $tempLoggedIn = TRUE;
   }
 
   $Username_Session = "Default";
@@ -158,6 +150,18 @@
     $Lost_Session = TRUE;
   }
 
+  $Setup_Session = FALSE;
+
+  // Check if Temporarily Logged In
+  if (isset($_SESSION['setup_account']) && $_SESSION["setup_account"] === TRUE) {
+    $Setup_Session = TRUE;
+  }
+
   $current_title = $main_strings['website_title'];
+
+  if (strpos(__DIR__, "/home/jacobsp/WebDev/") !== false) {
+    //$loggedIn = TRUE;
+    //$Verified_Session = TRUE;
+  }
 
 ?>

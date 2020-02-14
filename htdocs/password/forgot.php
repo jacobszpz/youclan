@@ -97,63 +97,46 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT * FROM users WHERE Username = ?";
+        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
 
-        if ($Statement_SQL = mysqli_prepare($Connection_SQL, $userLookup_Query)) {
-          // Bind variables to the prepared statement as parameters
-          mysqli_stmt_bind_param($Statement_SQL, "s", $User_Parameter);
+        $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
+        $phpErrorMessage .= "Retrieved Users<br>";
 
-          // Set parameters
-          $User_Parameter = $Username_Request;
+        // Check if username exists, if yes then verify password
+        $Rows_Result = mysqli_num_rows($Query_SQL);
+        if ($Rows_Result == 1){
+          $phpErrorMessage .= "One User Was Found<br>";
+          $New_Lost_Token = md5(uniqid(rand(), true));
 
-          // Attempt to execute the prepared statement
-          if (mysqli_stmt_execute($Statement_SQL)) {
-            $phpErrorMessage .= "Retrieved Users<br>";
+          // User Was Found. Create Random Token, Update it, and send Mail. Redirect To password/new
+          $updateToken_Query = "UPDATE users SET LostAccount = 1, LostToken = '$New_Lost_Token' WHERE Username = '$Username_Request'";
+          $dbTokenUpdate = mysqli_query($Connection_SQL, $updateToken_Query);
 
-              // Store result
-              mysqli_stmt_store_result($Statement_SQL);
+          if ($dbTokenUpdate) {
+            $phpErrorMessage .= "Token Generated and Account Marked as Lost in DB";
 
-              // Check if username exists, if yes then verify password
-              $Rows_Result = mysqli_stmt_num_rows($Statement_SQL);
-              if ($Rows_Result == 1){
-                $phpErrorMessage .= "One User Was Found<br>";
-                $New_Lost_Token = md5(uniqid(rand(), true));
+            $sendMailOP = FALSE;
+            $mailAttempts = 1;
 
-                // User Was Found. Create Random Token, Update it, and send Mail. Redirect To password/new
-                $updateToken_Query = "UPDATE users SET LostAccount = 1, LostToken = '$New_Lost_Token' WHERE Username = '$Username_Request'";
-                $dbTokenUpdate = mysqli_query($Connection_SQL, $updateToken_Query);
+            do {
+              $sendMailOP = sendRecoverMail($Username_Request, $New_Lost_Token);
+              $mailAttempts++;
+            } while (!$sendMailOP && $mailAttempts <= 3);
 
-                if ($dbTokenUpdate) {
-                  $phpErrorMessage .= "Token Generated and Account Marked as Lost in DB";
-
-                  $sendMailOP = FALSE;
-                  $mailAttempts = 1;
-
-                  do {
-                    $sendMailOP = sendRecoverMail($Username_Request, $New_Lost_Token);
-                    $mailAttempts++;
-                  } while (!$sendMailOP && $mailAttempts <= 3);
-
-                  if (!$sendMailOP) {
-                    // Token could not be sent. HELP!
-                    // Email Send Error
-                    $showDatabaseError = TRUE;
-                  } else {
-                    header("location: {$file_root}account/recover.php");
-                    exit;
-                  }
-                } else {
-                  $showDatabaseError = TRUE;
-                }
-              }
-          } else {
-            $showDatabaseError = TRUE;
+            if (!$sendMailOP) {
+              // Token could not be sent. HELP!
+              // Email Send Error
+              $showDatabaseError = TRUE;
+            } else {
+              $_SESSION['username'] = $Username_Result;
+              header("location: {$file_root}account/recover.php");
+              exit;
+            }
           }
+        } else {
+          $showDatabaseError = TRUE;
         }
-        mysqli_stmt_close($Statement_SQL);
         mysqli_close($Connection_SQL);
-      } else {
-        $showDatabaseError = TRUE;
       }
     }
   }

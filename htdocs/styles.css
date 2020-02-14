@@ -105,7 +105,7 @@ header {
 }
 
 /* Media Queries */
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .header-logo {
     margin: 0 auto;
   }
@@ -159,8 +159,7 @@ main {
 
 .hero-hover {
   display: none;
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin: 4em 0.5em;
   flex-flow: column nowrap;
   align-items: center;
 }
@@ -185,6 +184,26 @@ main {
 
 .registration-center {
   max-width: 600px;
+}
+
+.new-pass-center {
+  max-width: 500px;
+}
+
+.setup-center {
+  max-width: 400px;
+}
+
+.setup-main {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.setup-main > div {
+  padding: 1em 0em;
 }
 
 .main-counter {
@@ -270,7 +289,25 @@ main {
   font-size: 1em;
 }
 
+.setup-select {
+  margin-top: 0.4em;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.setup-input {
+  margin-top: 0.4em;
+  font-size: 1.2em;
+  width: 75%;
+  box-sizing: border-box;
+}
+
 .gender-radio {
+  font-size: 1.2em;
+}
+
+.lecturer-radio {
   font-size: 1.2em;
 }
 
@@ -291,6 +328,19 @@ main {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2em;
+}
+
+#pfp-preview {
+  width: 100px;
+  max-height: 200px;
+  margin: 1em;
+  border-radius: 0.6em;
+  display: none;
+}
+
+#pfp-preview-caption {
+  padding-top: 1em;
+  display: none;
 }
 
 /* Footer */
