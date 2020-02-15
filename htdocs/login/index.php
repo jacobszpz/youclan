@@ -107,8 +107,8 @@
               $_SESSION['username'] = $Username_Result;
               $_SESSION['name'] = $Name_Result;
               $_SESSION['surnames'] = $Surnames_Result;
-              
-              if ($SetupComplete_Result === 0) {
+
+              if ($SetupComplete_Result == 0) {
                 $_SESSION['setup_account'] = FALSE;
               } else {
                 $_SESSION['setup_account'] = TRUE;
@@ -117,12 +117,12 @@
               // Account Had Been Lost At Some Point Before
               // User Has Been Able To Log Back In
               // Therefore, Delete Token And Account Flag
-              if ($LostAccount_Result === 1) {
+              if ($LostAccount_Result == 1) {
                 $lostStatusReset_Query = "UPDATE users SET LostAccount = 0, LostToken = NULL WHERE Username = '$Username_Result'";
                 $dbLostUpdate = mysqli_query($Connection_SQL, $lostStatusReset_Query);
               }
 
-              if ($VerifiedAccount_Result === 0) {
+              if ($VerifiedAccount_Result == 0) {
                 $_SESSION['verified'] = FALSE;
                 $_SESSION['verify_token'] = $VerifyToken_Result;
                 header("location: {$file_root}account/verify.php");
@@ -130,8 +130,8 @@
               } else {
                 $_SESSION['verified'] = TRUE;
                 // Redirect user to welcome page
-                header("location: {$file_root}");
-                exit;
+                //header("location: {$file_root}");
+                //exit;
               }
             }
           }
