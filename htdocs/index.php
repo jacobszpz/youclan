@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="main-counter">
-        <h2 id="main-counter">9999</h2>
+        <h2 id="main-counter">999</h2>
         <span class="">students can't be wrong</span>
       </div>
     </main>

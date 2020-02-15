@@ -152,14 +152,14 @@
   $Lost_Session = FALSE;
 
   // Check if Temporarily Logged In
-  if (isset($_SESSION['lost_account']) && $_SESSION["lost_account"] === TRUE) {
+  if (isset($_SESSION['lost_account']) && $_SESSION['lost_account'] === TRUE) {
     $Lost_Session = TRUE;
   }
 
   $Setup_Session = FALSE;
 
   // Check if Temporarily Logged In
-  if (isset($_SESSION['setup_account']) && $_SESSION["setup_account"] === TRUE) {
+  if (isset($_SESSION['setup_account']) && $_SESSION['setup_account'] === TRUE) {
     $Setup_Session = TRUE;
   }
 
