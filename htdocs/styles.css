@@ -206,6 +206,24 @@ main {
   padding: 1em 0em;
 }
 
+.main-counter {
+  width: 100%;
+  min-height: 140px;
+  max-height: 200px;
+  padding: 0.2em 0em;
+  background-color: #b52b45;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 1.8em;
+}
+
+.main-counter h1 {
+
+}
+
 .login-form-div {
   width: 100%;
   display: flex;

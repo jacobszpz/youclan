@@ -223,7 +223,6 @@
     }
 
     // If both variables present
-    // TODO: CHANGE THIS CONDITIONAL
     if (!$showErrorMessage) {
       // Check if it matches database
       $phpErrorMessage .= "Setup is not empty<br>";
@@ -251,6 +250,8 @@
 
         // Only close connection if user won't be showed form again
         mysqli_close($Connection_SQL);
+
+        $_SESSION['setup_account'] = TRUE;
 
         header("location: {$file_root}");
         exit;
