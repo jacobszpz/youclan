@@ -192,7 +192,9 @@
       if ($FileCode == 0) {
         $phpErrorMessage .= "Upload has been successful<br>";
 
-        $NewFilename = md5(uniqid(rand(), true));
+        $FileExtension = end(explode(".", $PictureName));
+
+        $NewFilename = md5(uniqid(rand(), true)) . "." . $FileExtension;
         $FileChecksum = hash_file("sha256", $PictureTmpName);
 
         if (move_uploaded_file($PictureTmpName, "{$file_root}uploads/$NewFilename")) {
@@ -240,6 +242,8 @@
         Lecturer = '$Lecturer',
         ProfilePicture = '$uploadID',
         SetupComplete = 1 WHERE Username = '$Username_Session'";
+
+        echo $userSetup_Query;
 
         $Query_SQL = mysqli_query($Connection_SQL, $userSetup_Query);
 
