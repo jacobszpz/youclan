@@ -108,6 +108,12 @@
     $loginHeader = FALSE;
     $registerHeader = FALSE;
   }
+  
+  $ID_Session = "0";
+
+  if (isset($_SESSION['user_id'])) {
+    $ID_Session = $_SESSION['user_id'];
+  }
 
   $Username_Session = "Default";
 

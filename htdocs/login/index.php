@@ -83,6 +83,7 @@
               Fix for new, simpler approach to this shit
             */
 
+            $ID_Result = $Row_SQL['ID'];
             $Username_Result = $Row_SQL['Username'];
             $Password_Result = $Row_SQL['Password'];
             $Name_Result = $Row_SQL['Name'];
@@ -101,6 +102,7 @@
 
               // Password is correct
               // Store data in session variables
+              $_SESSION['user_id'] = $ID_Result;
               $_SESSION['logged_in'] = TRUE;
               $_SESSION['username'] = $Username_Result;
               $_SESSION['name'] = $Name_Result;

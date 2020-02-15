@@ -299,6 +299,7 @@
 
                 // Password is correct
                 // Store data in session variables
+                $_SESSION['user_id'] = mysqli_insert_id($Connection_SQL);
                 $_SESSION['logged_in'] = TRUE;
                 $_SESSION['username'] = $Username_Request;
                 $_SESSION['name'] = $Name_Request;

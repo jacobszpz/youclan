@@ -202,12 +202,13 @@
 
           $newUploadQuery = "INSERT INTO uploads
           (OriginalFilename, Filename, UploadedBy, FileChecksum, Filesize) VALUES
-          ('$PictureName', '$NewFilename', '$Username_Session', '$FileChecksum', '$FileSize')";
+          ('$PictureName', '$NewFilename', $ID_Session, '$FileChecksum', $FileSize)";
 
           $Query_SQL = mysqli_query($Connection_SQL, $newUploadQuery);
+          echo $Query_SQL;
           $phpErrorMessage .= "Upload registered in DB<br>";
 
-          $uploadID = mysqli_insert_id();
+          $uploadID = mysqli_insert_id($Connection_SQL);
           $showErrorMessage = FALSE;
         }
       }
@@ -234,15 +235,13 @@
 
         // Lookup Username in DB
         $userSetup_Query = "UPDATE users SET
-        Country = '$Country_Request',
-        Course = '$Course_Request',
-        CourseType = '$CourseType_Request',
-        StartYear = '$StartYear_Request',
-        Lecturer = '$Lecturer',
-        ProfilePicture = '$uploadID',
-        SetupComplete = 1 WHERE Username = '$Username_Session'";
-
-        echo $userSetup_Query;
+        Country = $Country_Request,
+        Course = $Course_Request,
+        CourseType = $CourseType_Request,
+        StartYear = $StartYear_Request,
+        Lecturer = $Lecturer_Request,
+        ProfilePicture = $uploadID,
+        SetupComplete = 1 WHERE ID = $ID_Session";
 
         $Query_SQL = mysqli_query($Connection_SQL, $userSetup_Query);
 
