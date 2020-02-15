@@ -130,8 +130,8 @@
               } else {
                 $_SESSION['verified'] = TRUE;
                 // Redirect user to welcome page
-                //header("location: {$file_root}");
-                //exit;
+                header("location: {$file_root}");
+                exit;
               }
             }
           }
