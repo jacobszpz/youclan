@@ -1,4 +1,4 @@
-count = 9999;
+count = 999;
 
 $(function(){
   $(".hero-hover").css("display", "flex").hide();
@@ -21,6 +21,6 @@ function showCounter() {
 }
 
 function increaseCounter() {
-  count += Math.floor((Math.random() * 100) + 1);
-  document.getElementById("main-counter").textContent = count;
+  count += Math.floor((Math.random() * 5) + 1);
+  document.getElementById("main-counter").textContent = count.toLocaleString();
 }

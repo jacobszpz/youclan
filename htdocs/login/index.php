@@ -107,7 +107,12 @@
               $_SESSION['username'] = $Username_Result;
               $_SESSION['name'] = $Name_Result;
               $_SESSION['surnames'] = $Surnames_Result;
-              $_SESSION['setup_account'] = $SetupComplete_Result;
+              
+              if ($SetupComplete_Result === 0) {
+                $_SESSION['setup_account'] = FALSE;
+              } else {
+                $_SESSION['setup_account'] = TRUE;
+              }
 
               // Account Had Been Lost At Some Point Before
               // User Has Been Able To Log Back In
