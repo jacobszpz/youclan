@@ -108,7 +108,7 @@
     $loginHeader = FALSE;
     $registerHeader = FALSE;
   }
-  
+
   $ID_Session = "0";
 
   if (isset($_SESSION['user_id'])) {
@@ -158,9 +158,28 @@
 
   $Setup_Session = FALSE;
 
+  $Picture_Session = "assets/defaultProfile.svg";
+  $Country_Session = "";
+
   // Check if Temporarily Logged In
   if (isset($_SESSION['setup_account']) && $_SESSION['setup_account'] === TRUE) {
     $Setup_Session = TRUE;
+
+    if (isset($_SESSION['picture'])) {
+      $Picture_Session = "uploads/" . $_SESSION['picture'];
+    }
+
+    if (isset($_SESSION['country'])) {
+      $Country_Session = $_SESSION['country'];
+    }
+
+    if (isset($_SESSION['course'])) {
+      $Course_Session = $_SESSION['course'];
+    }
+
+    if (isset($_SESSION['level'])) {
+      $Level_Session = $_SESSION['level'];
+    }
   }
 
   $current_title = $main_strings['website_title'];

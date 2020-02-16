@@ -251,6 +251,10 @@
         mysqli_close($Connection_SQL);
 
         $_SESSION['setup_account'] = TRUE;
+        $_SESSION['picture'] = $NewFilename;
+        $_SESSION['country'] = $Country_Request;
+        $_SESSION['course'] = $Course_Request;
+        $_SESSION['level'] = $CourseType_Request;
 
         header("location: {$file_root}");
         exit;

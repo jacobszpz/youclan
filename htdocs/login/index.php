@@ -62,7 +62,14 @@
         mysqli_set_charset($Connection_SQL, "utf8");
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
+        // $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Request'";
+        $userLookup_Query = "SELECT u.*, p.Filename, c.Name AS CourseName, t.Name AS Level, n.Name AS CountryName
+          FROM users AS u LEFT JOIN courses AS c ON (u.Course = c.ID)
+          LEFT JOIN course_types AS t ON (u.CourseType = t.ID)
+          LEFT JOIN uploads AS p ON (u.ProfilePicture = p.ID)
+          LEFT JOIN countries AS n ON (u.Country = n.ID)
+          WHERE Username = '$Username_Request'";
+
         $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
         $phpErrorMessage .= "Retrieved Users<br>";
@@ -92,6 +99,13 @@
             $VerifyToken_Result = $Row_SQL['VerifyToken'];
             $LostAccount_Result = $Row_SQL['LostAccount'];
             $SetupComplete_Result = $Row_SQL['SetupComplete'];
+            $Picture_Result = $Row_SQL['Filename'];
+            $Country_Result = $Row_SQL['Country'];
+            $Course_Result = $Row_SQL['Course'];
+            $Level_Result = $Row_SQL['CourseType'];
+            $CountryName_Result = $Row_SQL['CountryName'];
+            $CourseName_Result = $Row_SQL['CourseName'];
+            $LevelName_Result = $Row_SQL['Level'];
 
             $phpErrorMessage .= "Results Fetched<br>";
             $phpErrorMessage .= $NewAccount_Result . "<br>";
@@ -112,6 +126,10 @@
                 $_SESSION['setup_account'] = FALSE;
               } else {
                 $_SESSION['setup_account'] = TRUE;
+                $_SESSION['picture'] = $Picture_Result;
+                $_SESSION['country'] = $Country_Result;
+                $_SESSION['course'] = $Course_Result;
+                $_SESSION['level'] = $Level_Result;
               }
 
               // Account Had Been Lost At Some Point Before

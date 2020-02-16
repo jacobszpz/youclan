@@ -34,3 +34,23 @@
     }
   }
 ?>
+<!DOCTYPE html>
+<html lang="<?php echo $lang; ?>" dir="ltr">
+  <head>
+    <?php include "{$file_root}templates/head.php"; ?>
+    <script src="<?php print $file_root; ?>scripts/home.js"></script>
+  </head>
+  <body>
+    <header>
+      <?php include "{$file_root}templates/header.php"; ?>
+    </header>
+    <main class="main-home">
+      <div class="menu-contacts">
+        
+      </div>
+    </main>
+    <footer>
+      <?php include "{$file_root}templates/footer.php"; ?>
+    </footer>
+  </body>
+</html>
