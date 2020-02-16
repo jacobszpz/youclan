@@ -62,9 +62,8 @@
             </ul>
           </div>
         </div>
-        <div class="menu-close">
+        <div class="unselectable menu-close">
           <img id="sidebar-close-arrow" src="<?php echo $file_root; ?>assets/icons/arrow_dropdown_white.svg" alt="">
-
         </div>
       </div>
     </main>

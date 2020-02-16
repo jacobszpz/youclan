@@ -12,9 +12,9 @@ $(function(){
   );
 
   $(".menu-close").click(function() {
-    $(".contact-list").hide(250);
+    $(".contact-list").hide(50);
     $(".menu-contacts").animate({width: 'toggle'}, 350, function() {
-      $(".contact-list").show(150);
+      $(".contact-list").show();
     });
   });
 });
