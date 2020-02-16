@@ -45,8 +45,27 @@
       <?php include "{$file_root}templates/header.php"; ?>
     </header>
     <main class="main-home">
-      <div class="menu-contacts">
-        
+      <div class="menu-sidebar">
+        <div class="menu-contacts">
+          <h2 id="contacts-title">CONTACTS</h2>
+          <div class="contact-list">
+            <ul>
+              <!--Here we will eventually show every contact as a list element-->
+              <li>
+                <a href="<?php echo $file_root; ?>">
+                  <div class="contact-instance">
+                    <img class="contact-image" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                    <span class="contact-name">Braulio Pérez</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-close">
+          <img id="sidebar-close-arrow" src="<?php echo $file_root; ?>assets/icons/arrow_dropdown_white.svg" alt="">
+
+        </div>
       </div>
     </main>
     <footer>

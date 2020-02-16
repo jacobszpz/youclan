@@ -143,7 +143,7 @@ header {
 
 .header-account-dd {
   position: absolute;
-  top: 50%;
+  top: 65%;
   right: 0;
 
   background-color: #FFF;
@@ -426,13 +426,86 @@ main {
   padding: 0;
 }
 
+/* Sidebar */
+.menu-sidebar {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
 .menu-contacts {
   display: flex;
   flex-flow: column nowrap;
-  width: 16vw;
+  align-items: center;
+  width: 18vw;
   max-width: 320px;
   background-color: #FFF;
   border: 1px solid #9E9E9E;
+  padding: 0.8em 0em;
+}
+
+.contact-list {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.contact-list > ul {
+  margin: 0;
+  padding: 0;
+
+  margin-top: 1em;
+}
+
+#contacts-title {
+  font-size: 1.2em;
+}
+
+.contact-instance {
+  margin: 0;
+  padding: 0.8em 1em;
+}
+
+.contact-instance:hover {
+  color: #424242;
+  background-color: #F5F5F5;
+}
+
+.contact-name {
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 1.1em;
+}
+
+.contact-list a {
+  color: unset;
+  text-decoration: none;
+}
+
+.contact-image {
+  width: 2.4em;
+  height: 2.4em;
+  border-radius: 50%;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0px 10px;
+}
+
+.menu-close {
+  background-color: #b52b45;
+  width: 1vw;
+  max-width: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+#sidebar-close-arrow {
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari and Chrome */
+  -o-transform: rotate(90deg); /* Opera */
 }
 
 /* Footer */
