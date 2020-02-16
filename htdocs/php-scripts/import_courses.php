@@ -22,7 +22,7 @@
 
       $courseInsertion_Query = "INSERT INTO courses (Name) VALUES ('$course')";
 
-      $Query_SQL = mysqli_query($Connection_SQL, $courseInsertion_Query);
+      //$Query_SQL = mysqli_query($Connection_SQL, $courseInsertion_Query);
 
       if ($Query_SQL) {
         print ("$course was added to the db<br>");

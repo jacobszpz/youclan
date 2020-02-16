@@ -1,13 +1,19 @@
 <?php
   $current_page = "index";
+  
+  function getRoot($DIR) {
+    $path_parts = explode('htdocs', $DIR);
+    $path_deep = substr_count($path_parts[1], "/");
+    $file_root = "";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
+    for ($i=0; $i < $path_deep; $i++) {
+      $file_root .= "../";
+    }
 
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
+    return $file_root;
   }
+
+  $file_root = getRoot(__DIR__);
 
   include "{$file_root}templates/php_init.php";
 

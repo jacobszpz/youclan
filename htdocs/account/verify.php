@@ -22,14 +22,14 @@
 
   // Do not show page if user is already verified or not logged in
   if (!$loggedIn) {
-    header("location: " . $file_root . "login");
+    header("location: {$file_root}login");
     exit;
   } else {
     if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
+      header("location: {$file_root}password/new.php");
       exit;
     } else if ($Verified_Session) {
-      header("location: " . $file_root);
+      header("location: {$file_root}");
       exit;
     }
   }

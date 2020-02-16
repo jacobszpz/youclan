@@ -38,7 +38,7 @@
   if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     $phpErrorMessage .= "Form Method is POST<br>";
 
-    require_once $file_root . "database/config.php";
+    require_once "{$file_root}database/config.php";
 
     // Set Variables
     $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
@@ -56,11 +56,7 @@
     if (!$showLengthError && !$showMatchError) {
       $phpErrorMessage .= "Passcodes are appropriate<br>";
 
-      if (function_exists('mysqli_connect')) {
-        $Connection_SQL = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-      } else {
-        $Connection_SQL = FALSE;
-      }
+      require_once "{$file_root}database/conn.php";
 
       // Check connection
       if ($Connection_SQL !== FALSE) {

@@ -39,9 +39,9 @@
     return $mailOP;
   }
 
+  sleep(10);
+  
   sendTokenMail($Name_Session, $Username_Session, $Verify_Token);
-
-  sleep(5);
 
   header("location: {$file_root}account/verify.php");
   exit;

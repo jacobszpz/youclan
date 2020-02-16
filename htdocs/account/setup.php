@@ -22,7 +22,7 @@
 
   // Do not show page if user is not logged in
   if (!$loggedIn) {
-    header("location: " . $file_root . "login");
+    header("location: {$file_root}login");
     exit;
   } else {
     if ($Lost_Session) {

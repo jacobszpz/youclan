@@ -22,7 +22,7 @@
 
       $countryInsertion_Query = "INSERT INTO countries (Name) VALUES ('$country')";
 
-      $Query_SQL = mysqli_query($Connection_SQL, $countryInsertion_Query);
+      //$Query_SQL = mysqli_query($Connection_SQL, $countryInsertion_Query);
 
       if ($Query_SQL) {
         print ("$country was added to the db<br>");
