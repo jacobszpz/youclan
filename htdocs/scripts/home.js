@@ -1,5 +1,6 @@
 $(function(){
   $(".header-account-dd").hide();
+  $(".menu-contacts").hide();
 
   $(".header-account").hover(
     function() {
@@ -13,7 +14,7 @@ $(function(){
 
   $(".menu-close").click(function() {
     $(".contact-list").hide(50);
-    $(".menu-contacts").animate({width: 'toggle'}, 350, function() {
+    $(".menu-contacts").animate({width: 'toggle'}, 180, function() {
       $(".contact-list").show();
     });
   });
