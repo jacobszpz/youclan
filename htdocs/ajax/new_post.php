@@ -185,6 +185,7 @@
           $uploadID = mysqli_insert_id($Connection_SQL);
 
           if ($uploadID != 0) {
+            $ID_Upload = $uploadID;
             $errorType = 0;
             $pictureIncluded = TRUE;
             $NewPictureFilename = $NewFilename;
@@ -222,7 +223,7 @@
     }
 
     $errorMessage = $main_strings[getErrorMessage($errorType)];
-    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Picture_Session, $PostContent_Request, $NewPictureFilename);
+    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}");
 
     $returnArray = ['error' => $errorMessage];
 
