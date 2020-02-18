@@ -68,21 +68,22 @@
       </div>
       <div class="home-feed">
         <div class="new-post">
-          <form class="new-post-form" action="" method="post">
+          <form id="new-post-form" class="new-post-form" action="<?php echo $file_root; ?>ajax/new_post.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="MAX_FILE_SIZE" value="12582912">
             <div class="new-post-inside">
               <h2 class="new-post-title">Share New Post</h2>
-              <textarea id="new-post-textarea" name="name" rows="6" placeholder="Tell the world..."></textarea>
+              <textarea id="new-post-textarea" name="post_text" rows="6" placeholder="Tell the world..." required></textarea>
               <div class="new-post-buttons">
                 <div class="new-post-picture new-post-button">
                   <img src="<?php echo $file_root; ?>assets/icons/add_photo.svg" alt="">
-                  <input type="file" class="upload" />
+                  <input type="file" accept="image/*" name="post_picture" class="upload" />
                 </div>
                 <input id="new-post-submit" class="new-post-button" type="submit" name="" value="Post">
               </div>
             </div>
           </form>
         </div>
-        <div class="feed">
+        <div id="feed" class="feed">
           <ul>
             <li>
               <div class="post">
@@ -152,7 +153,7 @@
                   <div class="new-comment">
                     <form class="new-comment-form" action="" method="post">
                       <div class="new-comment-inside">
-                        <input type="text" class="new-comment-input" name="" value="" placeholder="Add to the conversation...">
+                        <input type="text" class="new-comment-input" name="" value="" placeholder="Add to the conversation..." required>
                         <input type="submit" class="new-post-button new-comment-button" name="" value="SEND">
                       </div>
                     </form>

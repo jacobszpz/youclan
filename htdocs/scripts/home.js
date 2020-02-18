@@ -19,3 +19,33 @@ $(function(){
     });
   });
 });
+
+var npf = $('#new-post-form');
+
+npf.submit(function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: npf.attr('method'),
+    url: npf.attr('action'),
+    data: npf.serialize(),
+    dataType: 'JSON',
+
+    success: function (data) {
+      console.log('Submission was successful.');
+      console.log(data);
+      var error = response["error"];
+      if (error == "") {
+        // No errors on ajax request
+        // PROCEED
+        var new_post = response["new_post"];
+        $("#feed ul").append(new_post);
+      }
+    },
+
+    error: function (data) {
+      console.log('An error occurred.');
+      console.log(data);
+    },
+  });
+});

@@ -73,6 +73,7 @@
   "error_lecturer_invalid": "Please select if you are a lecturer or a student",
   "error_values_not_integers": "Please select an option for each field",
   "error_values_range": "Please select a valid option for all fields",
+  "error_post_length": "Post should be of a moderate length",
   "error_file_upload": "The upload failed. Please try again",
   "warning_password_length": "Password must be at least 10 characters long",
   "warning_password_match": "Password and confirmation must match",

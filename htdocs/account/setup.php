@@ -205,7 +205,6 @@
           ('$PictureName', '$NewFilename', $ID_Session, '$FileChecksum', $FileSize)";
 
           $Query_SQL = mysqli_query($Connection_SQL, $newUploadQuery);
-          echo $Query_SQL;
           $phpErrorMessage .= "Upload registered in DB<br>";
 
           $uploadID = mysqli_insert_id($Connection_SQL);
