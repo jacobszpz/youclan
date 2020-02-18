@@ -18,34 +18,41 @@ $(function(){
       $(".contact-list").show();
     });
   });
-});
 
-var npf = $('#new-post-form');
+  $("#new-post-form").submit(function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    var form = $(this);
 
-npf.submit(function (e) {
-  e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: form.attr('action'),
+      data: formData,
+      dataType: 'JSON',
 
-  $.ajax({
-    type: npf.attr('method'),
-    url: npf.attr('action'),
-    data: npf.serialize(),
-    dataType: 'JSON',
+      success: function (data) {
+        console.log('Submission was successful.');
+        console.log(data);
+        var error = data["error"];
+        if (error == "") {
+          // No errors on ajax request
+          // PROCEED
+          var new_post = data["new_post"];
+          $("#feed ul").append(new_post);
+        } else {
+          // Error ocurred, show it?
+          alert(error);
+        }
+      },
 
-    success: function (data) {
-      console.log('Submission was successful.');
-      console.log(data);
-      var error = response["error"];
-      if (error == "") {
-        // No errors on ajax request
-        // PROCEED
-        var new_post = response["new_post"];
-        $("#feed ul").append(new_post);
-      }
-    },
-
-    error: function (data) {
-      console.log('An error occurred.');
-      console.log(data);
-    },
+      error: function (data) {
+        console.log('An error occurred.');
+        console.log(data);
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    });
   });
+
 });

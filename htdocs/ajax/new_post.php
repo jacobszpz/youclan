@@ -198,7 +198,7 @@
         $errorType = 3;
       }
     } else {
-      if ($FileCode != 4) {
+      if ($errorType == 0 && $FileCode != 4) {
         $errorType = 2;
       }
     }
@@ -221,10 +221,10 @@
       $postComplete = TRUE;
     }
 
-    $errorMessage = getErrorMessage($errorType);
+    $errorMessage = $main_strings[getErrorMessage($errorType)];
     $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Picture_Session, $PostContent_Request, $NewPictureFilename);
 
-    $returnArray = ['error' => $errorMessage];
+    $returnArray = ['error' => $errorType, 'a' => $FileCode];
 
     if ($postComplete) {
       $returnArray['new_post'] = $newPostHTML;
