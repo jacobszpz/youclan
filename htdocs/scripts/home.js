@@ -34,7 +34,7 @@ $(function(){
         console.log('Submission was successful.');
         console.log(data);
         var error = data["error"];
-        if (error == "") {
+        if (error == null) {
           // No errors on ajax request
           // PROCEED
           var new_post = data["new_post"];

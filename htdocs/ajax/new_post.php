@@ -224,7 +224,7 @@
     $errorMessage = $main_strings[getErrorMessage($errorType)];
     $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Picture_Session, $PostContent_Request, $NewPictureFilename);
 
-    $returnArray = ['error' => $errorType, 'a' => $FileCode];
+    $returnArray = ['error' => $errorMessage];
 
     if ($postComplete) {
       $returnArray['new_post'] = $newPostHTML;

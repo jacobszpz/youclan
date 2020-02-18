@@ -549,6 +549,7 @@ main {
   border-radius: 2px;
   display: flex;
   flex-flow: column nowrap;
+  margin-bottom: 24px;
 }
 
 .post-user-img {
@@ -705,7 +706,7 @@ main {
 }
 
 .new-comment {
-
+  margin-top: 1em;
 }
 
 .new-comment-inside {
