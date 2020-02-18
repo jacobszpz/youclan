@@ -68,7 +68,19 @@
       </div>
       <div class="home-feed">
         <div class="new-post">
-
+          <form class="new-post-form" action="" method="post">
+            <div class="new-post-inside">
+              <h2 class="new-post-title">Share New Post</h2>
+              <textarea id="new-post-textarea" name="name" rows="6" placeholder="Tell the world..."></textarea>
+              <div class="new-post-buttons">
+                <div class="new-post-picture new-post-button">
+                  <img src="<?php echo $file_root; ?>assets/icons/add_photo.svg" alt="">
+                  <input type="file" class="upload" />
+                </div>
+                <input id="new-post-submit" class="new-post-button" type="submit" name="" value="Post">
+              </div>
+            </div>
+          </form>
         </div>
         <div class="feed">
           <ul>
@@ -108,12 +120,12 @@
                       <img class="post-img" src="<?php echo $file_root; ?>assets/defaultPost.jpg" alt="">
                     </a>
                   </div>
-                  <div class="post-roses">
-                    <a href="#">
+                  <a class="post-roses-link" href="#">
+                    <div class="post-roses">
                       <img class="post-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
-                    </a>
-                    <span class="post-roses-no">90</span>
-                  </div>
+                      <span class="post-roses-no">90</span>
+                    </div>
+                  </a>
                 </div>
                 <div class="post-comments">
                   <span class="comments-title">COMMENTS</span>
@@ -127,15 +139,23 @@
                         </div>
                         <div class="comment-info">
                           <span class="comment-time">3 minutes</span>
-                          <div class="comment-roses">
-                            <a href="#">
+                          <a href="#">
+                            <div class="comment-roses">
                               <img class="comment-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
-                            </a>
-                            <span class="comment-roses-no">9</span>
-                          </div>
+                              <span class="comment-roses-no">9</span>
+                            </div>
+                          </a>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="new-comment">
+                    <form class="new-comment-form" action="" method="post">
+                      <div class="new-comment-inside">
+                        <input type="text" class="new-comment-input" name="" value="" placeholder="Add to the conversation...">
+                        <input type="submit" class="new-post-button new-comment-button" name="" value="SEND">
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
