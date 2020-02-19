@@ -27,7 +27,7 @@
     <?php } else if ($loggedIn) { ?>
       <div class="header-account">
         <h2>Hello, <?php echo $Name_Session; ?></h2>
-        <img id="header-account-pp" src="<?php echo $Picture_Session; ?>" alt="">
+        <img id="header-account-pp" src="<?php echo $file_root . $Picture_Session; ?>" alt="">
         <img src="<?php echo $file_root; ?>assets/icons/arrow_dropdown.svg" class="dropdown-arrow">
         <ul class="header-account-dd">
           <li><a href="<?php echo $file_root; ?>account/setup.php">- Settings</a></li>
