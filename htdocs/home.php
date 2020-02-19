@@ -35,9 +35,12 @@
   }
 
   require "{$file_root}objects/post.php";
+  require "{$file_root}objects/contact.php";
+
   require_once "{$file_root}database/config.php";
   require_once "{$file_root}database/conn.php";
 
+  $contactArray = [];
   $postArray = [];
 
   $getPostsQuery = "SELECT ps.*,
@@ -68,8 +71,30 @@
     }
 
     mysqli_free_result($Query_SQL);
+  }
+
+  $getUsersQuery = "SELECT u.Username, u.Name, u.Surnames, p.Filename FROM users AS u
+  LEFT JOIN uploads AS p ON (u.ProfilePicture = p.ID)";
+
+  $Query_SQL = mysqli_query($Connection_SQL, $getUsersQuery);
+
+  if($Query_SQL) {
+    while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+      $contact = new Contact;
+
+      $contact->name = $Row_SQL["Name"];
+      $contact->surname = $Row_SQL["Surnames"];
+      $contact->picture = $Row_SQL["Filename"];
+
+      $contact->username = $Row_SQL["Username"];
+
+      $contactArray[] = $contact;
+    }
+
+    mysqli_free_result($Query_SQL);
     mysqli_close($Connection_SQL);
   }
+
 
 ?>
 <!DOCTYPE html>
@@ -88,7 +113,11 @@
           <h2 id="contacts-title">CONTACTS</h2>
           <div class="contact-list">
             <ul>
-              <!--Here we will eventually show every contact as a list element-->
+              <?php
+                foreach ($contactArray as $contactObj) {
+                  print $contactObj->createContactHTML($file_root, "uploads/");
+                }
+              ?>
               <li>
                 <a href="<?php echo $file_root; ?>">
                   <div class="contact-instance">

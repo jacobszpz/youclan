@@ -787,6 +787,7 @@ main {
 .contact-instance {
   margin: 0;
   padding: 0.8em 1em;
+  max-height: 4em;
 }
 
 .contact-instance:hover {
@@ -798,6 +799,11 @@ main {
   vertical-align: middle;
   display: inline-block;
   font-size: 1.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 65%;
+  max-height: 2em;
+  white-space: nowrap;
 }
 
 .contact-list a {
@@ -806,8 +812,8 @@ main {
 }
 
 .contact-image {
-  width: 2.4em;
-  height: 2.4em;
+  width: 20%;
+  height: 20%;
   border-radius: 50%;
   vertical-align: middle;
   display: inline-block;
