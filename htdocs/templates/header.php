@@ -2,7 +2,7 @@
   <form class="login-form" action="<?php echo $file_root; ?>login/" method="post"> <?php } ?>
     <div class="main-header">
       <div class="header-logo">
-        <a href="<?php echo $file_root; ?>">
+        <a href="<?php echo $html_file_root; ?>">
           <img src="<?php echo $file_root; ?>assets/youclan_v3.png" alt="<?php echo $main_strings['logo_caption']; ?>" class="main-logo">
         </a>
       </div>

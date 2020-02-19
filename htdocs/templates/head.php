@@ -10,3 +10,4 @@
 
 <script src="<?php print $file_root; ?>scripts/jquery-3.4.1.min.js"></script>
 <script src="<?php print $file_root; ?>scripts/basic_functions.js"></script>
+<script src="<?php print $file_root; ?>scripts/header.js"></script>

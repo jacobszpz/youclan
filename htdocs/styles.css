@@ -737,6 +737,49 @@ main {
   box-shadow: unset;
 }
 
+.user {
+  width: 100%;
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.user-left {
+  margin-right: 20px;
+  border-right: 4px solid #b52b45;
+  padding-right: 2em;
+}
+
+.user-left-bottom {
+  display: flex;
+  flex-flow: row nowrap;
+  max-height: 42px;
+}
+
+.user-right {
+  margin-left: 20px;
+  padding: 2em;
+}
+
+.user-right > h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+#user-gender {
+  width: auto;
+  height: 40px;
+  margin-left: auto;
+}
+
+#user-picture {
+  width: 200px;
+  border: 16px solid #b52b45;
+  margin: 2em;
+  margin-right: 0;
+}
+
 /* Media Queries */
 @media only screen and (max-width: 600px) {
   .post-roses {
@@ -770,7 +813,7 @@ main {
   flex-flow: column nowrap;
   width: 100%;
   overflow-y: scroll;
-  max-height: 400px;
+  max-height: 1200px;
 }
 
 .contact-list > ul {
