@@ -9,7 +9,7 @@ class Contact {
   public $defPic = "assets/defaultProfile.svg";
 
   function createContactHTML($file_root, $upload_dir) {
-    $contactPicture = (isset($this->picture) ? $upload_dir . $this->picture : $defPic);
+    $contactPicture = (isset($this->picture) ? $upload_dir . $this->picture : $this->defPic);
     $contactHTML =
     "<li>
       <a href=\"{$file_root}user.php?user={$this->username}\">
