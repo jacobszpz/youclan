@@ -74,9 +74,11 @@
               <h2 class="new-post-title">Share New Post</h2>
               <textarea id="new-post-textarea" name="post_text" rows="6" placeholder="Tell the world..." required></textarea>
               <div class="new-post-buttons">
+                <img id="post-picture-preview" src="" alt="">
+
                 <div class="new-post-picture new-post-button">
                   <img src="<?php echo $file_root; ?>assets/icons/add_photo.svg" alt="">
-                  <input type="file" accept="image/*" name="post_picture" class="upload" />
+                  <input id="new-post-picture" type="file" accept="image/*" name="post_picture" class="upload" />
                 </div>
                 <input id="new-post-submit" class="new-post-button" type="submit" name="" value="Post">
               </div>

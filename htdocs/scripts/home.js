@@ -53,6 +53,16 @@ $(function(){
       contentType: false,
       processData: false
     });
+
+    document.getElementById("new-post-picture").value = "";
+    document.getElementById("new-post-textarea").value = "";
+    $("#post-picture-preview").attr("src", "");
+    $("#post-picture-preview").hide();
+  });
+
+  $("#new-post-picture").change(function() {
+    readURL(this, "#post-picture-preview");
+    $("#post-picture-preview").show(300);
   });
 
 });
