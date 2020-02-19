@@ -51,7 +51,7 @@
   FROM posts AS ps LEFT JOIN users as us ON (ps.PosterID = us.ID)
   LEFT JOIN uploads AS up ON (ps.ImageID = up.ID)
   LEFT JOIN uploads AS ul ON (us.ProfilePicture = ul.ID)
-  ORDER BY PostTime DESC";
+  ORDER BY PostTime DESC LIMIT 200";
 
   $Query_SQL = mysqli_query($Connection_SQL, $getPostsQuery);
 
@@ -76,7 +76,7 @@
   }
 
   $getUsersQuery = "SELECT u.Username, u.Name, u.Surnames, p.Filename FROM users AS u
-  LEFT JOIN uploads AS p ON (u.ProfilePicture = p.ID)";
+  LEFT JOIN uploads AS p ON (u.ProfilePicture = p.ID) ORDER BY RAND() LIMIT 200";
 
   $Query_SQL = mysqli_query($Connection_SQL, $getUsersQuery);
 
