@@ -85,6 +85,7 @@
       $contact->name = $Row_SQL["Name"];
       $contact->surname = $Row_SQL["Surnames"];
       $contact->picture = $Row_SQL["Filename"];
+      print $Row_SQL["Filename"];
 
       $contact->username = $Row_SQL["Username"];
 
