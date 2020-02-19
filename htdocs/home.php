@@ -45,6 +45,7 @@
 
   $getPostsQuery = "SELECT ps.*,
   CONCAT(us.Name, ' ', us.Surnames) AS Author,
+  us.Username AS Username,
   up.Filename AS PostPicture,
   ul.Filename AS ProfilePicture
   FROM posts AS ps LEFT JOIN users as us ON (ps.PosterID = us.ID)
@@ -60,6 +61,7 @@
 
       $post->id = $Row_SQL["ID"];
       $post->author = $Row_SQL["Author"];
+      $post->authorUN = $Row_SQL["Username"];
       $post->authorPicture = $Row_SQL["ProfilePicture"];
 
       $post->content = $Row_SQL["Content"];

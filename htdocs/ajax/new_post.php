@@ -51,11 +51,11 @@
 
   */
 
-  function createPostHTML($author, $pf_picture, $content, $picture) {
+  function createPostHTML($author, $username, $pf_picture, $content, $picture) {
     global $file_root;
     $imageHTML = "";
 
-    if ($picture != "/uploads") {
+    if ($picture != "uploads/") {
       $imageHTML =
       "<div class=\"post-image\">
         <a href=\"{$file_root}{$picture}\">
@@ -70,7 +70,7 @@
         <div class=\"post-info\">
           <img class=\"post-user-img\" src=\"{$file_root}{$pf_picture}\" alt=\"\">
           <div class=\"post-user-info\">
-            <span class=\"post-user-name\"><a href=\"{$file_root}account.php\">$author</a></span>
+            <span class=\"post-user-name\"><a href=\"{$file_root}user.php?user={$username}\">$author</a></span>
             <span class=\"post-time\">A moment ago</span>
           </div>
         </div>
@@ -221,7 +221,7 @@
     }
 
     $errorMessage = $main_strings[getErrorMessage($errorType)];
-    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}");
+    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Username_Session, $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}");
 
     $returnArray = ['error' => $errorMessage];
 

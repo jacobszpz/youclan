@@ -3,6 +3,7 @@ class Post {
   // Declare  properties
   public $id;
   public $author;
+  public $authorUN;
   public $authorPicture;
 
   public $content;
@@ -30,7 +31,7 @@ class Post {
         <div class=\"post-info\">
           <img class=\"post-user-img\" src=\"{$file_root}{$upload_dir}{$this->authorPicture}\" alt=\"\">
           <div class=\"post-user-info\">
-            <span class=\"post-user-name\"><a href=\"{$file_root}account.php\">$this->author</a></span>
+            <span class=\"post-user-name\"><a href=\"{$file_root}user.php?user={$this->authorUN}\">$this->author</a></span>
             <span class=\"post-time\">$this->time</span>
           </div>
         </div>

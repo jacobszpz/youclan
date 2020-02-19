@@ -27,7 +27,7 @@ $(function(){
           // No errors on ajax request
           // PROCEED
           var new_post = data["new_post"];
-          $("#feed ul").append(new_post);
+          $("#feed ul").prepend(new_post);
         } else {
           // Error ocurred, show it?
           alert(error);
