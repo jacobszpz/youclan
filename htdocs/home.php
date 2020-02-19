@@ -33,6 +33,43 @@
       exit;
     }
   }
+
+  require "{$file_root}objects/post.php";
+  require_once "{$file_root}database/config.php";
+  require_once "{$file_root}database/conn.php";
+
+  $postArray = [];
+
+  $getPostsQuery = "SELECT ps.*,
+  CONCAT(us.Name, ' ', us.Surnames) AS Author,
+  up.Filename AS PostPicture,
+  ul.Filename AS ProfilePicture
+  FROM posts AS ps LEFT JOIN users as us ON (ps.PosterID = us.ID)
+  LEFT JOIN uploads AS up ON (ps.ImageID = up.ID)
+  LEFT JOIN uploads AS ul ON (us.ProfilePicture = ul.ID)
+  ORDER BY PostTime DESC";
+
+  $Query_SQL = mysqli_query($Connection_SQL, $getPostsQuery);
+
+  if($Query_SQL) {
+    while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+      $post = new Post;
+
+      $post->author = $Row_SQL["Author"];
+      $post->authorPicture = $Row_SQL["ProfilePicture"];
+
+      $post->content = $Row_SQL["Content"];
+      $post->picture = $Row_SQL["PostPicture"];
+      $post->time = $Row_SQL["PostTime"];
+      $post->roses = $Row_SQL["Roses"];
+
+      $postArray[] = $post;
+    }
+
+    mysqli_free_result($Query_SQL);
+    mysqli_close($Connection_SQL);
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="ltr">
@@ -75,7 +112,6 @@
               <textarea id="new-post-textarea" name="post_text" rows="6" placeholder="Tell the world..." required></textarea>
               <div class="new-post-buttons">
                 <img id="post-picture-preview" src="" alt="">
-
                 <div class="new-post-picture new-post-button">
                   <img src="<?php echo $file_root; ?>assets/icons/add_photo.svg" alt="">
                   <input id="new-post-picture" type="file" accept="image/*" name="post_picture" class="upload" />
@@ -87,6 +123,11 @@
         </div>
         <div id="feed" class="feed">
           <ul>
+            <?php
+              foreach ($postArray as $postObj) {
+                print $postObj->createPostHTML($file_root, "uploads/");
+              }
+            ?>
             <li>
               <div class="post">
                 <div class="post-info">
@@ -123,12 +164,10 @@
                       <img class="post-img" src="<?php echo $file_root; ?>assets/defaultPost.jpg" alt="">
                     </a>
                   </div>
-                  <a class="post-roses-link" href="#">
-                    <div class="post-roses">
-                      <img class="post-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
-                      <span class="post-roses-no">90</span>
-                    </div>
-                  </a>
+                  <div class="post-roses">
+                    <img class="post-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
+                    <span class="post-roses-no">90</span>
+                  </div>
                 </div>
                 <div class="post-comments">
                   <span class="comments-title">COMMENTS</span>

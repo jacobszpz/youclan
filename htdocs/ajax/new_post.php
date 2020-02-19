@@ -55,10 +55,10 @@
     global $file_root;
     $imageHTML = "";
 
-    if (!empty($picture)) {
+    if ($picture != "/uploads") {
       $imageHTML =
       "<div class=\"post-image\">
-        <a href=\"#\">
+        <a href=\"{$file_root}{$picture}\">
           <img class=\"post-img\" src=\"{$file_root}{$picture}\" alt=\"\">
         </a>
       </div>";
@@ -70,8 +70,8 @@
         <div class=\"post-info\">
           <img class=\"post-user-img\" src=\"{$file_root}{$pf_picture}\" alt=\"\">
           <div class=\"post-user-info\">
-            <span class=\"post-user-name\"><a href=\"#\">$author</a></span>
-            <span class=\"post-time\">2 hours</span>
+            <span class=\"post-user-name\"><a href=\"{$file_root}account.php\">$author</a></span>
+            <span class=\"post-time\">A moment ago</span>
           </div>
         </div>
         <div class=\"post-content\">
@@ -79,12 +79,10 @@
             <span>{$content}</span>
           </div>
           $imageHTML
-          <a class=\"post-roses-link\" href=\"#\">
-            <div class=\"post-roses\">
-              <img class=\"post-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
-              <span class=\"post-roses-no\">0</span>
-            </div>
-          </a>
+          <div class=\"post-roses\">
+            <img class=\"post-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
+            <span class=\"post-roses-no\">0</span>
+          </div>
         </div>
         <div class=\"post-comments\">
           <span class=\"comments-title\">COMMENTS</span>
