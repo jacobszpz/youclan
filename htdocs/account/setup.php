@@ -31,9 +31,6 @@
     } else if (!$Verified_Session) {
       header("location: {$file_root}account/verify.php");
       exit;
-    } else if ($Setup_Session) {
-      header("location: {$file_root}");
-      exit;
     }
   }
 

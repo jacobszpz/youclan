@@ -30,7 +30,7 @@
         <img id="header-account-pp" src="<?php echo $Picture_Session; ?>" alt="">
         <img src="<?php echo $file_root; ?>assets/icons/arrow_dropdown.svg" class="dropdown-arrow">
         <ul class="header-account-dd">
-          <li><a href="<?php echo $file_root; ?>">- Settings</a></li>
+          <li><a href="<?php echo $file_root; ?>account/setup.php">- Settings</a></li>
           <li><a href="<?php echo $file_root; ?>account/logout.php">- Logout</a></li>
         </ul>
       </div>
