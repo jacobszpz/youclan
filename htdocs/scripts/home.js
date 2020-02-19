@@ -67,6 +67,9 @@ $(function(){
 
   $(".post-roses").click(function() {
     var postID = $(this).attr("post-id");
+    var rosesSpan = $(this).find('span');
+    var current_roses = +rosesSpan.text() + 1;
+
     $.ajax({
       type: "POST",
       data: {"post_id": postID} ,
@@ -77,9 +80,9 @@ $(function(){
         console.log('Vote posted.');
         console.log(data);
 
-        var current_roses = +$(this).find('span').text() + 1;
-        $(this).find('span').text(current_roses);
-        $(this).attr("rose-used", "1");
+        if(data["error"] != "failed") {
+          rosesSpan.text(current_roses);
+        }
       },
 
       error: function (data) {
