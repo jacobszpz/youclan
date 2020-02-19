@@ -57,16 +57,18 @@
     // TODO: Validate User Has Not Upvoted Post
     $voteCheckQuery = "SELECT * FROM roses WHERE UserID = '$ID_Session' AND PostID = '$PostID_Request'";
 
-    $Query_SQL = mysqli_query($voteCheckQuery);
+    $Query_SQL = mysqli_query($Connection_SQL, $voteCheckQuery);
 
     $phpErrorMessage .= "Retrieved Roses<br>";
 
     $Rows_Result = mysqli_num_rows($Query_SQL);
 
     if ($Rows_Result == 0) {
-      $upvoteQuery = "UPDATE posts SET Roses = Roses + 1 WHERE PostID = $PostID_Request";
+      $registerRoseQuery = "INSERT INTO roses (PostID, UserID) VALUES ($PostID_Request, $ID_Session)";
+      mysqli_query($Connection_SQL, $registerRoseQuery);
 
-      mysqli_query($upvoteQuery);
+      $upvoteQuery = "UPDATE posts SET Roses = Roses + 1 WHERE ID = $PostID_Request";
+      mysqli_query($Connection_SQL, $upvoteQuery);
       $phpErrorMessage .= "Updated roses<br>";
 
     } else {
@@ -77,5 +79,7 @@
     $errorMessage = getErrorMessage($errorType);
 
     $returnDict = ['error' => $errorMessage];
+
+    echo json_encode($returnDict);
   }
 ?>

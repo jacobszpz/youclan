@@ -1,6 +1,7 @@
 <?php
 class Post {
   // Declare  properties
+  public $id;
   public $author;
   public $authorPicture;
 
@@ -38,7 +39,7 @@ class Post {
             <span>{$this->content}</span>
           </div>
           $imageHTML
-          <div class=\"post-roses\">
+          <div class=\"post-roses\" post-id=\"$this->id\">
             <img class=\"post-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
             <span class=\"post-roses-no\">$this->roses</span>
           </div>

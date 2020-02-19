@@ -55,6 +55,7 @@
     while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
       $post = new Post;
 
+      $post->id = $Row_SQL["ID"];
       $post->author = $Row_SQL["Author"];
       $post->authorPicture = $Row_SQL["ProfilePicture"];
 

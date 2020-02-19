@@ -65,4 +65,27 @@ $(function(){
     $("#post-picture-preview").show(300);
   });
 
+  $(".post-roses").click(function() {
+    var postID = $(this).attr("post-id");
+    $.ajax({
+      type: "POST",
+      data: {"post_id": postID} ,
+      url: "ajax/upvote.php",
+      dataType: 'JSON',
+
+      success: function (data) {
+        console.log('Vote posted.');
+        console.log(data);
+
+        var current_roses = +$(this).find('span').text() + 1;
+        $(this).find('span').text(current_roses);
+        $(this).attr("rose-used", "1");
+      },
+
+      error: function (data) {
+        console.log('Vote could not be posted.');
+        console.log(data);
+      }
+    });
+  });
 });
