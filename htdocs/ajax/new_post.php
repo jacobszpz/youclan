@@ -51,7 +51,7 @@
 
   */
 
-  function createPostHTML($author, $username, $pf_picture, $content, $picture) {
+  function createPostHTML($author, $username, $pf_picture, $content, $picture, $post_id) {
     global $file_root;
     $imageHTML = "";
 
@@ -79,7 +79,7 @@
             <span>{$content}</span>
           </div>
           $imageHTML
-          <div class=\"post-roses\">
+          <div class=\"post-roses\" post-id=\"$post_id\">
             <img class=\"post-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
             <span class=\"post-roses-no\">0</span>
           </div>
@@ -217,11 +217,12 @@
 
       $Query_SQL = mysqli_query($Connection_SQL, $newPostQuery);
       $phpErrorMessage .= "Upload registered in DB<br>";
+      $postID = mysqli_insert_id($Connection_SQL);
       $postComplete = TRUE;
     }
 
     $errorMessage = $main_strings[getErrorMessage($errorType)];
-    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Username_Session, $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}");
+    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Username_Session, $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}", $postID);
 
     $returnArray = ['error' => $errorMessage];
 
