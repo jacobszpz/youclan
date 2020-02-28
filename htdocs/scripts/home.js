@@ -83,13 +83,12 @@ $(function(){
 
   $("#feed").on('submit', '.new-comment-form', function (e) {
       e.preventDefault();
-      var formData = new FormData(this);
       var form = $(this);
 
       $.ajax({
         type: "POST",
         url: form.attr('action'),
-        data: formData,
+        data: form.serialize(),
         dataType: 'JSON',
 
         success: function (data) {
@@ -110,10 +109,7 @@ $(function(){
         error: function (data) {
           console.log('An error occurred.');
           console.log(data);
-        },
-        cache: false,
-        contentType: false,
-        processData: false
+        }
       });
 
       form.find(".new-comment-input").val();
