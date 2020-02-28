@@ -143,6 +143,7 @@
     <main>
       <div class="main-center">
         <h2><?php echo $errorMessage; ?></h2>
+        <?php echo "<span>$phpErrorMessage</span>"; ?>
         <?php if ($showForm) {?>
           <form class="" action="" method="get">
             <h4><?php echo $main_strings['account_verify_token']; ?></h4>
