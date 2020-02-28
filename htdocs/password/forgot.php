@@ -123,7 +123,7 @@
               // Email Send Error
               $showDatabaseError = TRUE;
             } else {
-              $_SESSION['username'] = $Username_Result;
+              $_SESSION['username'] = $Username_Request;
               header("location: {$file_root}account/recover.php");
               exit;
             }
