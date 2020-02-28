@@ -159,7 +159,7 @@
                 WHERE ParentID = $postObj->id
                 ORDER BY cs.PostTime DESC LIMIT 200";
 
-                $Query_SQL = mysqli_query($getCommentsQuery);
+                $Query_SQL = mysqli_query($Connection_SQL, $getCommentsQuery);
 
                 if($Query_SQL) {
                   while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
