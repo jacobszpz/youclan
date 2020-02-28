@@ -17,7 +17,7 @@
   // To Test Logged In Redirect
   // $loggedIn = TRUE;
 
-  $debuggingActivated = TRUE;
+  $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   // Do not show page if user is already logged in
