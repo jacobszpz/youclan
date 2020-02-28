@@ -67,7 +67,12 @@
         $phpErrorMessage .= "DB Connection was successful<br>";
 
         // Lookup Username in DB
-        $userLookup_Query = "SELECT * FROM users WHERE Username = '$Username_Session'";
+        $userLookup_Query = "SELECT u.*, p.Filename, c.Name AS CourseName, t.Name AS Level, n.Name AS CountryName
+          FROM users AS u LEFT JOIN courses AS c ON (u.Course = c.ID)
+          LEFT JOIN course_types AS t ON (u.CourseType = t.ID)
+          LEFT JOIN uploads AS p ON (u.ProfilePicture = p.ID)
+          LEFT JOIN countries AS n ON (u.Country = n.ID)
+          WHERE Username = '$Username_Request'";
         $Query_SQL = mysqli_query($Connection_SQL, $userLookup_Query);
 
         $phpErrorMessage .= "Retrieved Users<br>";
@@ -81,13 +86,22 @@
           if ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
             $phpErrorMessage .= "Results Fetched<br>";
 
+            $ID_Result = $Row_SQL['ID'];
             $Username_Result = $Row_SQL['Username'];
             $Password_Result = $Row_SQL['Password'];
             $Name_Result = $Row_SQL['Name'];
             $Surnames_Result = $Row_SQL['Surnames'];
             $VerifiedAccount_Result = $Row_SQL['VerifiedAccount'];
             $VerifyToken_Result = $Row_SQL['VerifyToken'];
-            $LostToken_Result = $Row_SQL['LostToken'];
+            $LostAccount_Result = $Row_SQL['LostAccount'];
+            $SetupComplete_Result = $Row_SQL['SetupComplete'];
+            $Picture_Result = $Row_SQL['Filename'];
+            $Country_Result = $Row_SQL['Country'];
+            $Course_Result = $Row_SQL['Course'];
+            $Level_Result = $Row_SQL['CourseType'];
+            $CountryName_Result = $Row_SQL['CountryName'];
+            $CourseName_Result = $Row_SQL['CourseName'];
+            $LevelName_Result = $Row_SQL['Level'];
 
             // Check token
             if($Token_Request = $LostToken_Result){
@@ -109,6 +123,16 @@
                 $_SESSION['surnames'] = $Surnames_Result;
                 $_SESSION['lost_account'] = TRUE;
                 $_SESSION['verified'] = TRUE;
+
+                if ($SetupComplete_Result == 0) {
+                  $_SESSION['setup_account'] = FALSE;
+                } else {
+                  $_SESSION['setup_account'] = TRUE;
+                  $_SESSION['picture'] = $Picture_Result;
+                  $_SESSION['country'] = $Country_Result;
+                  $_SESSION['course'] = $Course_Result;
+                  $_SESSION['level'] = $Level_Result;
+                }
 
                 header("location: {$file_root}password/new.php");
               } else {
