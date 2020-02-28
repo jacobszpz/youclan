@@ -87,7 +87,7 @@
     }
 
     mysqli_free_result($Query_SQL);
-    mysqli_close($Connection_SQL);
+    // mysqli_close($Connection_SQL);
   }
 
 
@@ -151,6 +151,29 @@
             <?php
               foreach ($postArray as $postObj) {
                 print $postObj->createPostHTML($file_root, "uploads/");
+
+                $getCommentsQuery = "SELECT cs.*, CONCAT(us.Name, ' ', us.Surnames) AS Author,
+                us.Username AS Username, ul.Filename AS ProfilePicture FROM comments AS cs
+                LEFT JOIN users as us ON (cs.PosterID = us.ID)
+                LEFT JOIN uploads AS ul ON (us.ProfilePicture = ul.ID)
+                WHERE ParentID = $postObj->id
+                ORDER BY cs.PostTime DESC LIMIT 200";
+
+                $Query_SQL = mysqli_query($getCommentsQuery);
+
+                if($Query_SQL) {
+                  while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
+                    $comment = new Comment;
+
+                    $coment->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
+                    $comment->commentData($Row_SQL["ID"], $Row_SQL["Content"], $Row_SQL["PostTime"], $Row_SQL["Roses"]);
+
+                    print $comment->createCommentHTML($file_root, "uploads/");
+                  }
+
+                  mysqli_free_result($Query_SQL);
+                  mysql_close($Connection_SQL);
+                }
               }
             ?>
             <li>
