@@ -139,6 +139,6 @@ $(function(){
         }
       });
 
-      form.find(".new-comment-input").val();
+      form.find(".new-comment-input").val("");
     });
 });
