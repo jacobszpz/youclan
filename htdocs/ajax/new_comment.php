@@ -20,7 +20,7 @@
   // To Test Logged In Redirect
   // $loggedIn = TRUE;
 
-  $debuggingActivated = TRUE;
+  $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   $noReturn = FALSE;
@@ -114,7 +114,7 @@
     }
 
     if ($debuggingActivated) {
-      $returnArray['debug'] = $phpErrorMessage;
+      //$returnArray['debug'] = $phpErrorMessage;
       $returnArray['query'] = $newPostQuery;
     }
 
