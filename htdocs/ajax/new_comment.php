@@ -105,9 +105,9 @@
 
     $newComment = new Comment;
     $newComment->authorData($Username_Session, "$Name_Session $Surnames_Session", $Picture_Session);
-    $newPost->commentData($commentID, $CommentContent_Request, "A moment ago", "0");
+    $newComment->commentData($commentID, $CommentContent_Request, "A moment ago", "0");
 
-    $newCommentHTML = createCommentHTML($file_root, "uploads/");
+    $newCommentHTML = $newComment->createCommentHTML($file_root, "uploads/");
 
     $returnArray = ['error' => $errorMessage];
 
