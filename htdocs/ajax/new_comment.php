@@ -79,8 +79,6 @@
     $CommentContent_Request = filter_input(INPUT_POST, 'comment_text', FILTER_SANITIZE_STRING);
     $PostID_Request = filter_input(INPUT_POST, 'post_id', FILTER_SANITIZE_STRING);
 
-    $NewPictureFilename = "";
-
     $phpErrorMessage .= "Variables From Request Read<br>";
 
     # DATA VALIDATION #
