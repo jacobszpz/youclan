@@ -151,7 +151,7 @@
           <ul>
             <?php
               foreach ($postArray as $postObj) {
-                print $postObj->createPostHTML($file_root, "uploads/");
+                $commentHTML = "";
 
                 $getCommentsQuery = "SELECT cs.*, CONCAT(us.Name, ' ', us.Surnames) AS Author,
                 us.Username AS Username, ul.Filename AS ProfilePicture FROM comments AS cs
@@ -169,13 +169,17 @@
                     $comment->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
                     $comment->commentData($Row_SQL["ID"], $Row_SQL["Content"], $Row_SQL["PostTime"], $Row_SQL["Roses"]);
 
-                    print $comment->createCommentHTML($file_root, "uploads/");
+                    $commentHTML .= $comment->createCommentHTML($file_root, "uploads/");
                   }
 
                   mysqli_free_result($Query_SQL);
-                  mysql_close($Connection_SQL);
                 }
+                
+                $postObj->comments = $commentHTML;
+                print $postObj->createPostHTML($file_root, "uploads/");
               }
+
+              mysqli_close($Connection_SQL);
             ?>
             <li>
               <div class="post">

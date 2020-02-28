@@ -12,6 +12,7 @@ class Post {
   public $picture;
   public $time;
   public $roses;
+  public $comments;
 
   function postData($post_id, $text, $image, $time, $roses) {
     $this->id = $post_id;
@@ -63,6 +64,7 @@ class Post {
         </div>
         <div class=\"post-comments\">
           <span class=\"comments-title\">COMMENTS</span>
+          $this->comments
           <div class=\"new-comment\">
             <form class=\"new-comment-form\" action=\"{$file_root}ajax/new_comment.php\" method=\"post\">
               <div class=\"new-comment-inside\">
