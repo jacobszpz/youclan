@@ -46,6 +46,8 @@
 
     // Set Variables
     $Username_Request = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
+    $Username_Request = str_ireplace("@uclan.ac.uk", "", $Username_Request);
+
     $Password_Request = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
 
     $phpErrorMessage .= "Variables From Request Read<br>";
