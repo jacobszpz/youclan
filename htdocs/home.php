@@ -174,7 +174,7 @@
 
                   mysqli_free_result($Query_SQL);
                 }
-                
+
                 $postObj->comments = $commentHTML;
                 print $postObj->createPostHTML($file_root, "uploads/");
               }
@@ -236,12 +236,10 @@
                         </div>
                         <div class="comment-info">
                           <span class="comment-time">3 minutes</span>
-                          <a href="#">
-                            <div class="comment-roses">
-                              <img class="comment-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
-                              <span class="comment-roses-no">9</span>
-                            </div>
-                          </a>
+                          <div class="comment-roses">
+                            <img class="comment-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
+                            <span class="comment-roses-no">9</span>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -35,12 +35,10 @@ class Comment {
           </div>
           <div class=\"comment-info\">
             <span class=\"comment-time\">$this->time</span>
-            <a href=\"#\">
-              <div class=\"comment-roses\" comment-id=\"$this->id\">
-                <img class=\"comment-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
-                <span class=\"comment-roses-no\">$this->roses</span>
-              </div>
-            </a>
+            <div class=\"comment-roses\" comment-id=\"$this->id\">
+              <img class=\"comment-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
+              <span class=\"comment-roses-no\">$this->roses</span>
+            </div>
           </div>
         </div>
       </div>
