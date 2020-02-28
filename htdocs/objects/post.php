@@ -66,7 +66,7 @@ class Post {
           <div class=\"new-comment\">
             <form class=\"new-comment-form\" action=\"{$file_root}ajax/new_comment.php\" method=\"post\">
               <div class=\"new-comment-inside\">
-                <input type=\"hidden\" name\"post_id\" value=\"$this->id\">
+                <input type=\"hidden\" name=\"post_id\" value=\"$this->id\">
                 <input type=\"text\" class=\"new-comment-input\" name=\"comment_text\" value=\"\" placeholder=\"Add to the conversation...\" required>
                 <input type=\"submit\" class=\"new-post-button new-comment-button\" name=\"\" value=\"SEND\">
               </div>
