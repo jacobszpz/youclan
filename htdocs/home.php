@@ -36,6 +36,7 @@
 
   require "{$file_root}objects/post.php";
   require "{$file_root}objects/contact.php";
+  require "{$file_root}objects/comment.php";  
 
   require_once "{$file_root}database/config.php";
   require_once "{$file_root}database/conn.php";
