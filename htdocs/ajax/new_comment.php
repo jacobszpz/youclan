@@ -115,6 +115,7 @@
 
     if ($debuggingActivated) {
       $returnArray['debug'] = $phpErrorMessage;
+      $returnArray['query'] = $newPostQuery;
     }
 
     header('Content-Type: application/json');
