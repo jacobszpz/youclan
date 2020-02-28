@@ -34,6 +34,7 @@
   // for country and courses dropdown
   require_once "{$file_root}database/config.php";
   require_once "{$file_root}database/conn.php";
+  require "{$file_root}objects/post.php";
 
   $pictureIncluded = FALSE;
   $errorType = 0;
@@ -50,56 +51,6 @@
     5: Other error on PYMFURTS
 
   */
-
-  function createPostHTML($author, $username, $pf_picture, $content, $picture, $post_id) {
-    global $file_root;
-    $imageHTML = "";
-
-    if ($picture != "uploads/") {
-      $imageHTML =
-      "<div class=\"post-image\">
-        <a href=\"{$file_root}{$picture}\">
-          <img class=\"post-img\" src=\"{$file_root}{$picture}\" alt=\"\">
-        </a>
-      </div>";
-    }
-
-    $postHTML =
-    "<li>
-      <div class=\"post\">
-        <div class=\"post-info\">
-          <img class=\"post-user-img\" src=\"{$file_root}{$pf_picture}\" alt=\"\">
-          <div class=\"post-user-info\">
-            <span class=\"post-user-name\"><a href=\"{$file_root}user.php?user={$username}\">$author</a></span>
-            <span class=\"post-time\">A moment ago</span>
-          </div>
-        </div>
-        <div class=\"post-content\">
-          <div class=\"post-text\">
-            <span>{$content}</span>
-          </div>
-          $imageHTML
-          <div class=\"post-roses\" post-id=\"$post_id\">
-            <img class=\"post-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
-            <span class=\"post-roses-no\">0</span>
-          </div>
-        </div>
-        <div class=\"post-comments\">
-          <span class=\"comments-title\">COMMENTS</span>
-          <div class=\"new-comment\">
-            <form class=\"new-comment-form\" action=\"\" method=\"post\">
-              <div class=\"new-comment-inside\">
-                <input type=\"text\" class=\"new-comment-input\" name=\"\" value=\"\" placeholder=\"Add to the conversation...\" required>
-                <input type=\"submit\" class=\"new-post-button new-comment-button\" name=\"\" value=\"SEND\">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </li>";
-
-    return $postHTML;
-  }
 
   function getErrorMessage($type) {
     $errorString = "";
@@ -222,7 +173,12 @@
     }
 
     $errorMessage = $main_strings[getErrorMessage($errorType)];
-    $newPostHTML = createPostHTML("$Name_Session $Surnames_Session", $Username_Session, $Picture_Session, $PostContent_Request, "uploads/{$NewPictureFilename}", $postID);
+
+    $newPost = new Post;
+    $newPost->authorData($Username_Session, "$Name_Session $Surnames_Session", $Picture_Session);
+    $newPost->postData($postID, $PostContent_Request, "$NewPictureFilename", "A moment ago", "0");
+
+    $newPostHTML = $newPost->createPostHTML($file_root, "uploads/");
 
     $returnArray = ['error' => $errorMessage];
 

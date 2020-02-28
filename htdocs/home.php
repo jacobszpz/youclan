@@ -59,15 +59,8 @@
     while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
       $post = new Post;
 
-      $post->id = $Row_SQL["ID"];
-      $post->author = $Row_SQL["Author"];
-      $post->authorUN = $Row_SQL["Username"];
-      $post->authorPicture = $Row_SQL["ProfilePicture"];
-
-      $post->content = $Row_SQL["Content"];
-      $post->picture = $Row_SQL["PostPicture"];
-      $post->time = $Row_SQL["PostTime"];
-      $post->roses = $Row_SQL["Roses"];
+      $post->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
+      $post->postData($Row_SQL["ID"], $Row_SQL["Content"], $Row_SQL["PostPicture"], $Row_SQL["PostTime"], $Row_SQL["Roses"]);
 
       $postArray[] = $post;
     }

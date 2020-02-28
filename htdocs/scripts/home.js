@@ -80,4 +80,42 @@ $(function(){
       }
     });
   });
+
+  $("#feed").on('submit', '.new-comment-form', function (e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      var form = $(this);
+
+      $.ajax({
+        type: "POST",
+        url: form.attr('action'),
+        data: formData,
+        dataType: 'JSON',
+
+        success: function (data) {
+          console.log('Submission was successful.');
+          console.log(data);
+          var error = data["error"];
+          if (error == null) {
+            // No errors on ajax request
+            // PROCEED
+            var new_comment = data["new_comment"];
+            form.parent().prev().after(new_comment);
+          } else {
+            // Error ocurred, show it?
+            alert(error);
+          }
+        },
+
+        error: function (data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+
+      form.find(".new-comment-input").val();
+    });
 });
