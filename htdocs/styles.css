@@ -663,6 +663,7 @@ main {
   margin: 0.4em auto;
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
 }
 
 .comment-content {
