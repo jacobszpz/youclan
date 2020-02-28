@@ -54,7 +54,7 @@ $(function(){
     $("#post-picture-preview").show(300);
   });
 
-  $(".post-roses").click(function() {
+  $("#feed").on('click', '.post-roses', function() {
     var postID = $(this).attr("post-id");
     var rosesSpan = $(this).find('span');
     var current_roses = +rosesSpan.text() + 1;
