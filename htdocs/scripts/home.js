@@ -81,6 +81,33 @@ $(function(){
     });
   });
 
+  $("#feed").on('click', '.comment-roses', function() {
+    var commentID = $(this).attr("comment-id");
+    var rosesSpan = $(this).find('span');
+    var current_roses = + rosesSpan.text() + 1;
+
+    $.ajax({
+      type: "POST",
+      data: {"comment_id": commentID} ,
+      url: "ajax/up_comment.php",
+      dataType: 'JSON',
+
+      success: function (data) {
+        console.log('Vote posted.');
+        console.log(data);
+
+        if(data["error"] != "failed") {
+          rosesSpan.text(current_roses);
+        }
+      },
+
+      error: function (data) {
+        console.log('Vote could not be posted.');
+        console.log(data);
+      }
+    });
+  });
+
   $("#feed").on('submit', '.new-comment-form', function (e) {
       e.preventDefault();
       var form = $(this);
