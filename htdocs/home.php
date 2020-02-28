@@ -36,7 +36,7 @@
 
   require "{$file_root}objects/post.php";
   require "{$file_root}objects/contact.php";
-  require "{$file_root}objects/comment.php";  
+  require "{$file_root}objects/comment.php";
 
   require_once "{$file_root}database/config.php";
   require_once "{$file_root}database/conn.php";
@@ -166,7 +166,7 @@
                   while ($Row_SQL = mysqli_fetch_array($Query_SQL, MYSQLI_ASSOC)) {
                     $comment = new Comment;
 
-                    $coment->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
+                    $comment->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
                     $comment->commentData($Row_SQL["ID"], $Row_SQL["Content"], $Row_SQL["PostTime"], $Row_SQL["Roses"]);
 
                     print $comment->createCommentHTML($file_root, "uploads/");
