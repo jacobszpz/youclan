@@ -742,12 +742,14 @@ main {
 .user {
   width: 100%;
   display: flex;
+  flex-flow: row wrap;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .user-left {
   margin-right: 20px;
+  margin-bottom: 20px
   border-right: 4px solid #b52b45;
   padding-right: 2em;
 }
