@@ -14,17 +14,17 @@ class Post {
   public $roses;
 
   function postData($post_id, $text, $image, $time, $roses) {
-    $this->$id = $post_id;
-    $this->$content = $text;
-    $this->$picture = $image;
-    $this->$time = $time;
-    $this->$roses = $roses;
+    $this->id = $post_id;
+    $this->content = $text;
+    $this->picture = $image;
+    $this->time = $time;
+    $this->roses = $roses;
   }
 
   function authorData($user, $name, $pf_picture) {
-    $this->$author = $name;
-    $this->$authorUN = $user;
-    $this->$authorPicture = $pf_picture;
+    $this->author = $name;
+    $this->authorUN = $user;
+    $this->authorPicture = $pf_picture;
   }
 
   function createPostHTML($file_root, $upload_dir) {
