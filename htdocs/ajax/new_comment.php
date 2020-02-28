@@ -111,7 +111,7 @@
 
     $returnArray = ['error' => $errorMessage];
 
-    if ($postComplete) {
+    if ($commentComplete) {
       $returnArray['new_comment'] = $newCommentHTML;
     }
 
