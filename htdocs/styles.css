@@ -609,7 +609,7 @@ main {
 
 .post-image {
   width: 50%;
-  margin: 2em auto;
+  margin: 1em auto;
   max-height: 720px;
   overflow: hidden;
 }
@@ -623,6 +623,7 @@ main {
 }
 
 .post-roses {
+  display: flex;
   cursor: pointer;
   align-self: flex-start;
   background-color: #F8BBD0;
@@ -683,8 +684,16 @@ main {
   flex-flow: column nowrap;
 }
 
+.comment-user-img-w {
+  overflow: hidden;
+  width: 2.4em;
+  height: 2.4em;
+
+}
+
 .comment-user-img {
-  width: 2.8em;
+  width: 2.4em;
+  max-height: 2.4em;
   margin-right: 20px;
 }
 

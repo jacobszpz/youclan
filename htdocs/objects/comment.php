@@ -27,7 +27,9 @@ class Comment {
     $commentHTML =
     "<div class=\"comment\">
       <div class=\"comment-inside\">
-        <img class=\"comment-user-img\" src=\"{$file_root}{$upload_dir}{$this->authorPicture}\" alt=\"\">
+        <div class=\"comment-user-img-w\">
+          <img class=\"comment-user-img\" src=\"{$file_root}{$upload_dir}{$this->authorPicture}\" alt=\"\">
+        </div>
         <div class=\"comment-body\">
           <div class=\"comment-content\">
             <span class=\"comment-author\"><a href=\"{$file_root}user.php?user={$this->authorUN}\">$this->author</a></span>
