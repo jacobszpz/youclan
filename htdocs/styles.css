@@ -574,7 +574,6 @@ main {
 
 .post-user-name {
   display: inline-block;
-  vertical-align: top;
   color: #b52b45;
   font-weight: bold;
   text-overflow: ellipsis;
@@ -591,20 +590,21 @@ main {
 }
 
 .post-info {
-  margin-bottom: 32px;
+  padding: 1em;
   display: flex;
   flex-flow: row nowrap;
 }
 
 .post-content {
-  font-size: 0.9em;
-  margin-bottom: 42px;
+  font-size: 1.2em;
+  margin-bottom: 24px;
   display: flex;
   flex-flow: column nowrap;
 }
 
 .post-text {
   margin-bottom: 20px;
+  padding: 0 1em;
 }
 
 .post-image {
@@ -627,8 +627,9 @@ main {
   align-self: flex-start;
   background-color: #F8BBD0;
   border-radius: 32px;
-  padding: 0.8em 1.4em;
+  padding: 0.4em 0.8em;
   box-shadow: 0px 2px grey;
+  margin: 0 1em;
 }
 
 .post-roses:hover {
@@ -640,7 +641,7 @@ main {
 }
 
 .post-rose-icon {
-  width: 32px;
+  width: 24px;
   display: inline-block;
   vertical-align: middle;
   border-radius: 50%;
@@ -649,8 +650,8 @@ main {
 .post-roses-no {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 20px;
-  font-size: 1.4em;
+  margin-left: 12px;
+  font-size: 0.8em;
 }
 
 .post-comments {
