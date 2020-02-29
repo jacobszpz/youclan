@@ -833,7 +833,7 @@ main {
 
 .contact-instance {
   margin: 0;
-  padding: 0.8em 1em;
+  padding: 0.8em;
   max-height: 4em;
 }
 
@@ -848,7 +848,7 @@ main {
   font-size: 1.1em;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 65%;
+  width: 60%;
   max-height: 2em;
   white-space: nowrap;
 }
@@ -866,10 +866,12 @@ main {
   display: inline-block;
   vertical-align: middle;
   margin: 0px 10px;
+  overflow: hidden;
 }
 
 .contact-image {
   width: 3em;
+  min-height: 3em;
 }
 
 .menu-close {
