@@ -564,12 +564,12 @@ main {
   width: 3em;
   height: 3em;
   margin-right: 2em;
+  border-radius: 5%;
 }
 
 .post-user-img {
   width: 3em;
   min-height: 3em;
-  border-radius: 5%;
 }
 
 .post-user-name {
@@ -588,7 +588,6 @@ main {
 .post-user-info {
   display: flex;
   flex-flow: column nowrap;
-  margin-left: 60px;
 }
 
 .post-info {
