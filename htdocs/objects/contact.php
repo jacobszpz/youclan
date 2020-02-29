@@ -14,7 +14,9 @@ class Contact {
     "<li>
       <a href=\"{$file_root}user.php?user={$this->username}\">
         <div class=\"contact-instance\">
-          <img class=\"contact-image\" src=\"{$file_root}{$contactPicture}\" alt=\"Profile picture of {$this->name}\">
+          <div class=\"contact-image-wrapper\">
+            <img class=\"contact-image\" src=\"{$file_root}{$contactPicture}\" alt=\"Profile picture of {$this->name}\">
+          </div>
           <span class=\"contact-name\">{$this->name} {$this->surname}</span>
         </div>
       </a>

@@ -858,13 +858,18 @@ main {
   text-decoration: none;
 }
 
-.contact-image {
-  width: 20%;
-  height: 20%;
+.contact-image-wrapper {
+  width: 3em;
+  height: 3em;
+
   border-radius: 50%;
-  vertical-align: middle;
   display: inline-block;
+  vertical-align: middle;
   margin: 0px 10px;
+}
+
+.contact-image {
+  width: 3em;
 }
 
 .menu-close {
