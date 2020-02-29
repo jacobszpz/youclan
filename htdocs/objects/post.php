@@ -46,7 +46,9 @@ class Post {
     "<li>
       <div class=\"post\">
         <div class=\"post-info\">
-          <img class=\"post-user-img\" src=\"{$file_root}{$contactPicture}\" alt=\"\">
+          <div class=\"post-user-img-wrapper\">
+            <img class=\"post-user-img\" src=\"{$file_root}{$contactPicture}\" alt=\"\">
+          </div>
           <div class=\"post-user-info\">
             <span class=\"post-user-name\"><a href=\"{$file_root}user.php?user={$this->authorUN}\">$this->author</a></span>
             <span class=\"post-time\">$this->time</span>

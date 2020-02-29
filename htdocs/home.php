@@ -117,7 +117,9 @@
               <li>
                 <a href="<?php echo $file_root; ?>">
                   <div class="contact-instance">
-                    <img class="contact-image" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                    <div class="contact-image-wrapper">
+                      <img class="contact-image" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                    </div>
                     <span class="contact-name">Fake John</span>
                   </div>
                 </a>
