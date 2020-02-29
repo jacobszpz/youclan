@@ -689,6 +689,7 @@ main {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+
   overflow: hidden;
   width: 2.4em;
   height: 2.4em;
@@ -855,6 +856,9 @@ main {
 }
 
 .contact-instance {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   margin: 0;
   padding: 0.8em;
   max-height: 4em;
@@ -866,8 +870,6 @@ main {
 }
 
 .contact-name {
-  vertical-align: middle;
-  display: inline-block;
   font-size: 1.1em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -886,8 +888,6 @@ main {
   height: 3em;
 
   border-radius: 50%;
-  display: inline-block;
-  vertical-align: middle;
   margin: 0px 10px;
   overflow: hidden;
 }
