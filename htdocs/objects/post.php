@@ -36,7 +36,7 @@ class Post {
 
     $imageHTML = "";
 
-    if (!$pfp_includes_folder) {
+    if (!$this->pfp_includes_folder) {
       $this->authorPicture = $upload_dir . $this->authorPicture;
     }
 
