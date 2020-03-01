@@ -186,7 +186,9 @@
             <li>
               <div class="post">
                 <div class="post-info">
-                  <img class="post-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                  <div class="post-user-img-wrapper">
+                    <img class="post-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                  </div>
                   <div class="post-user-info">
                     <span class="post-user-name"><a href="#">Fake John</a></span>
                     <span class="post-time">2 hours</span>
@@ -230,7 +232,9 @@
                   <span class="comments-title">COMMENTS</span>
                   <div class="comment">
                     <div class="comment-inside">
-                      <img class="comment-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                      <div class="comment-user-img-w">
+                        <img class="comment-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                      </div>
                       <div class="comment-body">
                         <div class="comment-content">
                           <span class="comment-author"><a href="#">Fake John</a></span>
