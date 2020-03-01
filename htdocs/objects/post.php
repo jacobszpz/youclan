@@ -104,9 +104,9 @@ class Post {
 
       $y_pattern = '/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?(.+)?/';
 
-      $y_frame = "<iframe class=\"youtube_frame\" width=\"560\" height=\"315\"
+      $y_frame = "<div class=\"youtube-frame-w\"><iframe class=\"youtube-frame\" width=\"560\" height=\"315\"
         src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" allow=\"accelerometer; autoplay;
-        encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+        encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></div>";
 
       $text = preg_replace($y_pattern, $y_frame, $text);
     }
