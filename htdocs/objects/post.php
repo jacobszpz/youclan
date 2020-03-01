@@ -102,7 +102,7 @@ class Post {
         $text = preg_replace($pattern, $replacement, $text);
       }
 
-      $y_pattern = '/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/';
+      $y_pattern = '/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?(.+)?/';
 
       $y_frame = "<iframe class=\"youtube_frame\" width=\"560\" height=\"315\"
         src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" allow=\"accelerometer; autoplay;
