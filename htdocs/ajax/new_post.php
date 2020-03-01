@@ -176,9 +176,9 @@
 
     $newPost = new Post;
     $newPost->authorData($Username_Session, "$Name_Session $Surnames_Session", $Picture_Session);
-    $newPost->postData($postID, $PostContent_Request, "$NewPictureFilename", "A moment ago", "0");
+    $newPost->postData($postID, $PostContent_Request, "uploads/$NewPictureFilename", "A moment ago", "0");
 
-    $newPostHTML = $newPost->createPostHTML($file_root, "uploads/");
+    $newPostHTML = $newPost->createPostHTML($file_root, "");
 
     $returnArray = ['error' => $errorMessage];
 

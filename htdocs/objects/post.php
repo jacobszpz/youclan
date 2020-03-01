@@ -16,6 +16,17 @@ class Post {
 
   function postData($post_id, $text, $image, $time, $roses) {
     $this->id = $post_id;
+
+    if (!empty($text)) {
+      $atPos = strpos($text, '@');
+
+      if($atPos !== false) {
+        $pattern = '/(\@)([a-zA-Z0-9\-\.]+)/g';
+        $replacement = '<a href="user.php?user=$2">$1$2</a>';
+        $text = preg_replace($pattern, $replacement, $text);
+      }
+    }
+
     $this->content = $text;
     $this->picture = $image;
     $this->time = $time;
