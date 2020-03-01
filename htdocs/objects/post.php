@@ -29,7 +29,7 @@ class Post {
   }
 
   function createPostHTML($file_root, $upload_dir) {
-    $smartText = mentions($this->content, $file_root);
+    $smartText = $this->mentions($this->content, $file_root);
 
     $imageHTML = "";
 
