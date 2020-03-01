@@ -14,6 +14,8 @@ class Post {
   public $roses;
   public $comments;
 
+  public $pfp_includes_folder = false;
+
   function postData($post_id, $text, $image, $time, $roses) {
     $this->id = $post_id;
     $this->content = $text;
@@ -22,10 +24,11 @@ class Post {
     $this->roses = $roses;
   }
 
-  function authorData($user, $name, $pf_picture) {
+  function authorData($user, $name, $pf_picture, $pif = false) {
     $this->author = $name;
     $this->authorUN = $user;
     $this->authorPicture = $pf_picture;
+    $this->pfp_includes_folder = $pif;
   }
 
   function createPostHTML($file_root, $upload_dir) {
@@ -33,7 +36,11 @@ class Post {
 
     $imageHTML = "";
 
-    $contactPicture = (!empty($this->authorPicture) ? $upload_dir . $this->authorPicture : $this->defPic);
+    if (!$pfp_includes_folder) {
+      $this->authorPicture = $upload_dir . $this->authorPicture;
+    }
+
+    $contactPicture = (!empty($this->authorPicture) ?  $this->authorPicture : $this->defPic);
 
     if (!empty($this->picture)) {
       $imageHTML =
