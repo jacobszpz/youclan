@@ -14,19 +14,8 @@ class Post {
   public $roses;
   public $comments;
 
-  function postData($post_id, $text, $image, $time, $roses) {
+  function postData($post_id, $text, $image, $time, $roses, $file_root = "") {
     $this->id = $post_id;
-
-    if (!empty($text)) {
-      $atPos = strpos($text, '@');
-
-      if($atPos !== false) {
-        $pattern = '/(\@)([a-zA-Z0-9\-\.]+)/g';
-        $replacement = '<a href="user.php?user=$2">$1$2</a>';
-        $text = preg_replace($pattern, $replacement, $text);
-      }
-    }
-
     $this->content = $text;
     $this->picture = $image;
     $this->time = $time;
@@ -40,6 +29,8 @@ class Post {
   }
 
   function createPostHTML($file_root, $upload_dir) {
+    $smartText = mentions($this->content, $file_root);
+
     $imageHTML = "";
 
     $contactPicture = (!empty($this->authorPicture) ? $upload_dir . $this->authorPicture : $this->defPic);
@@ -67,7 +58,7 @@ class Post {
         </div>
         <div class=\"post-content\">
           <div class=\"post-text\">
-            <span>{$this->content}</span>
+            <span>$smartText</span>
           </div>
           $imageHTML
           <div class=\"post-roses\" post-id=\"$this->id\">
@@ -92,6 +83,20 @@ class Post {
     </li>";
 
     return $postHTML;
+  }
+
+  function mentions($text, $file_root) {
+    if (!empty($text)) {
+      $atPos = strpos($text, '@');
+
+      if($atPos !== false) {
+        $pattern = '/(\@)([a-zA-Z0-9\-\.]+)/';
+        $replacement = "<a href=\"{$file_root}user.php?user=$2\">$1$2</a>";
+        $text = preg_replace($pattern, $replacement, $text);
+      }
+    }
+
+    return $text;
   }
 }
 ?>
