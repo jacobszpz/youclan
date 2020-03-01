@@ -14,7 +14,7 @@ class Post {
   public $roses;
   public $comments;
 
-  function postData($post_id, $text, $image, $time, $roses, $file_root = "") {
+  function postData($post_id, $text, $image, $time, $roses) {
     $this->id = $post_id;
     $this->content = $text;
     $this->picture = $image;
