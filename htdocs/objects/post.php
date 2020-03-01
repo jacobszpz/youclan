@@ -29,7 +29,7 @@ class Post {
   }
 
   function createPostHTML($file_root, $upload_dir) {
-    $smartText = $this->mentions($this->content, $file_root);
+    $smartText = $this->smartText($this->content, $file_root);
 
     $imageHTML = "";
 
@@ -85,7 +85,7 @@ class Post {
     return $postHTML;
   }
 
-  function mentions($text, $file_root) {
+  function smartText($text, $file_root) {
     if (!empty($text)) {
       $atPos = strpos($text, '@');
 
@@ -94,6 +94,14 @@ class Post {
         $replacement = "<a href=\"{$file_root}user.php?user=$2\">$1$2</a>";
         $text = preg_replace($pattern, $replacement, $text);
       }
+
+      $y_pattern = '/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/';
+
+      $y_frame = "<iframe class=\"youtube_frame\" width=\"560\" height=\"315\"
+        src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" allow=\"accelerometer; autoplay;
+        encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+
+      $text = preg_replace($y_pattern, $y_frame, $text);
     }
 
     return $text;
