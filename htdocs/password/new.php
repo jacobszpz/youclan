@@ -1,31 +1,21 @@
 <?php
   $current_page = "new_password";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Overwrite Page Title
   $current_title = $main_strings['new_pass_title'];
 
-  // To Test Logged In Redirect
-  // $loggedIn = TRUE;
-
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   if (!$loggedIn) {
-    header("location: " . $file_root . "login");
+    header("location: /login");
     exit;
   } else {
     if (!$Lost_Session) {
-      header("location: {$file_root}");
+      header("location: /");
       exit;
     }
   }
@@ -72,7 +62,7 @@
           $phpErrorMessage .= "Password Updated";
           $_SESSION['lost_account'] = FALSE;
 
-          header("location: {$file_root}");
+          header("location: /");
         } else {
           $showDatabaseError = TRUE;
         }
@@ -97,7 +87,7 @@
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
     <?php include "{$file_root}templates/head.php"; ?>
-    <script src="<?php print $file_root; ?>scripts/login.js"></script>
+    <script src="/scripts/login.js"></script>
   </head>
   <body>
     <header>

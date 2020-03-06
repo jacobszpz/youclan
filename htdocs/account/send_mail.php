@@ -1,13 +1,7 @@
 <?php
   $current_page = "send_mail";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
 
   function sendTokenMail($name, $user, $token) {
     global $file_root, $lang, $main_strings;
@@ -40,9 +34,9 @@
   }
 
   sleep(10);
-  
+
   sendTokenMail($Name_Session, $Username_Session, $Verify_Token);
 
-  header("location: {$file_root}account/verify.php");
+  header("location: /account/verify.php");
   exit;
 ?>

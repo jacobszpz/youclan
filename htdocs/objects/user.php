@@ -25,20 +25,20 @@ class User {
   }
 
 
-  function getPicture($file_root, $upload_dir) {
+  function getPicture($upload_dir) {
     $contactPicture = (isset($this->picture) ? $upload_dir . $this->picture : $this->defPic);
 
-    return $file_root . $contactPicture;
+    return "/$contactPicture";
   }
 
-  function getGenderPic($file_root, $asset_dir) {
+  function getGenderPic($asset_dir) {
     $genderPic = "male.svg";
 
     if ($this->gender == 1) {
       $genderPic = "female.svg";
     }
 
-    return $file_root . $asset_dir . $genderPic;
+    return "/{$asset_dir}{$genderPic}";
   }
 }
 ?>

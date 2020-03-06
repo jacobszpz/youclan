@@ -1,35 +1,22 @@
 <?php
   $current_page = "index";
-  
-  function getRoot($DIR) {
-    $path_parts = explode('htdocs', $DIR);
-    $path_deep = substr_count($path_parts[1], "/");
-    $file_root = "";
 
-    for ($i=0; $i < $path_deep; $i++) {
-      $file_root .= "../";
-    }
-
-    return $file_root;
-  }
-
-  $file_root = getRoot(__DIR__);
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Do not show page if user is already verified or not logged in
   if ($loggedIn) {
     if ($Lost_Session) {
-      header("location: {$file_root}password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if (!$Verified_Session) {
-      header("location: {$file_root}account/verify.php");
+      header("location: /account/verify.php");
       exit;
     } else if (!$Setup_Session) {
-      header("location: {$file_root}account/setup.php");
+      header("location: /account/setup.php");
       exit;
     } else {
-      header("location: {$file_root}home.php");
+      header("location: /home.php");
       exit;
     }
   }
@@ -38,7 +25,7 @@
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
     <?php include "{$file_root}templates/head.php"; ?>
-    <script src="<?php print $file_root; ?>scripts/index.js"></script>
+    <script src="/scripts/index.js"></script>
   </head>
   <body onscroll="showCounter()">
     <header>
@@ -48,8 +35,8 @@
       <div class="main-hero">
         <div class="hero-hover">
           <h2 class=""><?php echo $main_strings['website_slogan']; ?></h2>
-          <img class="main-leaves" src="<?php echo $file_root; ?>assets/leaves.png" alt="">
-          <a class="no-underline" href="<?php echo $file_root; ?>account/registration.php">
+          <img class="main-leaves" src="/assets/leaves.png" alt="">
+          <a class="no-underline" href="/account/registration.php">
             <div class="header-registration">
               <?php echo $main_strings['register_title']; ?>
             </div>

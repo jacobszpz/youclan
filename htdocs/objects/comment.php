@@ -23,22 +23,22 @@ class Comment {
     $this->roses = $roses;
   }
 
-  function createCommentHTML($file_root, $upload_dir) {
+  function createCommentHTML($upload_dir) {
     $commentHTML =
     "<div class=\"comment\">
       <div class=\"comment-inside\">
         <div class=\"comment-user-img-w\">
-          <img class=\"comment-user-img\" src=\"{$file_root}{$upload_dir}{$this->authorPicture}\" alt=\"\">
+          <img class=\"comment-user-img\" src=\"/{$upload_dir}{$this->authorPicture}\" alt=\"\">
         </div>
         <div class=\"comment-body\">
           <div class=\"comment-content\">
-            <span class=\"comment-author\"><a href=\"{$file_root}user.php?user={$this->authorUN}\">$this->author</a></span>
+            <span class=\"comment-author\"><a href=\"/user.php?user={$this->authorUN}\">$this->author</a></span>
             <span class=\"comment-text\">$this->content</span>
           </div>
           <div class=\"comment-info\">
             <span class=\"comment-time\">$this->time</span>
             <div class=\"comment-roses\" comment-id=\"$this->id\">
-              <img class=\"comment-rose-icon\" src=\"{$file_root}assets/icons/rose.svg\" alt=\"\">
+              <img class=\"comment-rose-icon\" src=\"/assets/icons/rose.svg\" alt=\"\">
               <span class=\"comment-roses-no\">$this->roses</span>
             </div>
           </div>

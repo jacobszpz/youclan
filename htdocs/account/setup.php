@@ -1,35 +1,25 @@
 <?php
   $current_page = "setup";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Overwrite Page Title
   $current_title = $main_strings['setup_title'];
-
-  // To Test Logged In Redirect
-  // $loggedIn = TRUE;
 
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   // Do not show page if user is not logged in
   if (!$loggedIn) {
-    header("location: {$file_root}login");
+    header("location: /login");
     exit;
   } else {
     if ($Lost_Session) {
-      header("location: {$file_root}password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if (!$Verified_Session) {
-      header("location: {$file_root}account/verify.php");
+      header("location: /account/verify.php");
       exit;
     }
   }
@@ -251,7 +241,7 @@
         $_SESSION['course'] = $Course_Request;
         $_SESSION['level'] = $CourseType_Request;
 
-        header("location: {$file_root}");
+        header("location: /");
         exit;
       } else {
         $showDatabaseError = TRUE;
@@ -276,7 +266,7 @@
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
     <?php include "{$file_root}templates/head.php"; ?>
-    <script src="<?php print $file_root; ?>scripts/setup.js"></script>
+    <script src="/scripts/setup.js"></script>
   </head>
   <body>
     <header>

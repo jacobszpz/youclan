@@ -1,14 +1,7 @@
 <?php
   $current_page = "forgot";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Overwrite Page Title
@@ -23,13 +16,13 @@
   // Do not show page if user is already logged in
   if ($loggedIn) {
     if ($Lost_Session) {
-      header("location: " . $file_root . "password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if (!$Verified_Session) {
-      header("location: " . $file_root . "account/verify.php");
+      header("location: /account/verify.php");
       exit;
     } else {
-      header("location: " . $file_root);
+      header("location: /");
       exit;
     }
   }
@@ -124,7 +117,7 @@
               $showDatabaseError = TRUE;
             } else {
               $_SESSION['username'] = $Username_Request;
-              header("location: {$file_root}account/recover.php");
+              header("location: /account/recover.php");
               exit;
             }
           }

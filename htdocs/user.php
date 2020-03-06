@@ -1,21 +1,9 @@
 <?php
   $current_page = "user";
 
-  function getRoot($DIR) {
-    $path_parts = explode('htdocs', $DIR);
-    $path_deep = substr_count($path_parts[1], "/");
-    $file_root = "";
-
-    for ($i=0; $i < $path_deep; $i++) {
-      $file_root .= "../";
-    }
-
-    return $file_root;
-  }
-
-  $file_root = getRoot(__DIR__);
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
+
   require "{$file_root}objects/user.php";
 
   $debuggingActivated = FALSE;
@@ -26,17 +14,17 @@
   $errorMessage = "";
   // Do not show page if user is already verified or not logged in
   if (!$loggedIn) {
-    header("location: {$file_root}login");
+    header("location: /login");
     exit;
   } else {
     if ($Lost_Session) {
-      header("location: {$file_root}password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if (!$Verified_Session) {
-      header("location: {$file_root}account/verify.php");
+      header("location: /account/verify.php");
       exit;
     } else if (!$Setup_Session) {
-      header("location: {$file_root}account/setup.php");
+      header("location: /account/setup.php");
       exit;
     }
   }
@@ -108,13 +96,13 @@
       <div class="user">
         <div class="user-left">
           <h2><?php echo $errorMessage; ?></h2>
-          <img id="user-picture" src="<?php echo $User_Result->getPicture($file_root, "uploads/"); ?>" alt="">
+          <img id="user-picture" src="<?php echo $User_Result->getPicture("uploads/"); ?>" alt="">
           <div class="user-left-bottom">
             <div class="user-names">
               <h2><?php echo $User_Result->name; ?></h2>
               <h2><?php echo $User_Result->surnames; ?></h2>
             </div>
-            <img id="user-gender" src="<?php echo $User_Result->getGenderPic($file_root, "assets/icons/"); ?>" alt="">
+            <img id="user-gender" src="<?php echo $User_Result->getGenderPic("assets/icons/"); ?>" alt="">
           </div>
         </div>
         <div class="user-right">

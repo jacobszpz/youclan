@@ -1,20 +1,7 @@
 <?php
   $current_page = "new_post";
 
-  function getRoot($DIR) {
-    $path_parts = explode('htdocs', $DIR);
-    $path_deep = substr_count($path_parts[1], "/");
-    $file_root = "";
-
-    for ($i=0; $i < $path_deep; $i++) {
-      $file_root .= "../";
-    }
-
-    return $file_root;
-  }
-
-  $file_root = getRoot(__DIR__);
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // To Test Logged In Redirect
@@ -178,7 +165,7 @@
     $newPost->authorData($Username_Session, "$Name_Session $Surnames_Session", $Picture_Session, true);
     $newPost->postData($postID, $PostContent_Request, $NewPictureFilename, "A moment ago", "0");
 
-    $newPostHTML = $newPost->createPostHTML($file_root, "");
+    $newPostHTML = $newPost->createPostHTML("");
 
     $returnArray = ['error' => $errorMessage];
 

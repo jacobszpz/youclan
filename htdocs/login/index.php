@@ -1,14 +1,7 @@
 <?php
   $current_page = "login";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Overwrite Page Title
@@ -27,7 +20,7 @@
   # USER LOGGED IN REDIRECT #
 
   if ($loggedIn) {
-    header("location: {$file_root}");
+    header("location: /");
     exit;
   }
 
@@ -144,12 +137,12 @@
               if ($VerifiedAccount_Result == 0) {
                 $_SESSION['verified'] = FALSE;
                 $_SESSION['verify_token'] = $VerifyToken_Result;
-                header("location: {$file_root}account/verify.php");
+                header("location: /account/verify.php");
                 exit;
               } else {
                 $_SESSION['verified'] = TRUE;
                 // Redirect user to welcome page
-                header("location: {$file_root}");
+                header("location: /");
                 exit;
               }
             }
@@ -174,7 +167,7 @@
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
     <?php include "{$file_root}templates/head.php"; ?>
-    <script src="<?php print $file_root; ?>scripts/login.js"></script>
+    <script src="/scripts/login.js"></script>
   </head>
   <body>
     <header>
@@ -217,7 +210,7 @@
                 <span id="password-show-span"><?php echo $main_strings['password_show']; ?></span>
                 <input type="checkbox" name="show" value="" onclick="togglePasswordShow()" class="site-login-checkbox">
               </div>
-              <a href="<?php echo "{$file_root}password/forgot.php" ?>"><?php echo $main_strings['account_forgot']; ?></a>
+              <a href="/password/forgot.php"><?php echo $main_strings['account_forgot']; ?></a>
               <input type="submit" class="header-submit" name="" value="<?php echo $main_strings['account_login']; ?>">
             </div>
         </div>

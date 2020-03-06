@@ -1,35 +1,22 @@
 <?php
   $current_page = "home";
 
-  function getRoot($DIR) {
-    $path_parts = explode('htdocs', $DIR);
-    $path_deep = substr_count($path_parts[1], "/");
-    $file_root = "";
-
-    for ($i=0; $i < $path_deep; $i++) {
-      $file_root .= "../";
-    }
-
-    return $file_root;
-  }
-
-  $file_root = getRoot(__DIR__);
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Do not show page if user is already verified or not logged in
   if (!$loggedIn) {
-    header("location: {$file_root}login");
+    header("location: /login");
     exit;
   } else {
     if ($Lost_Session) {
-      header("location: {$file_root}password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if (!$Verified_Session) {
-      header("location: {$file_root}account/verify.php");
+      header("location: /account/verify.php");
       exit;
     } else if (!$Setup_Session) {
-      header("location: {$file_root}account/setup.php");
+      header("location: /account/setup.php");
       exit;
     }
   }
@@ -97,7 +84,7 @@
 <html lang="<?php echo $lang; ?>" dir="ltr">
   <head>
     <?php include "{$file_root}templates/head.php"; ?>
-    <script src="<?php print $file_root; ?>scripts/home.js"></script>
+    <script src="/scripts/home.js"></script>
   </head>
   <body>
     <header>
@@ -111,14 +98,14 @@
             <ul>
               <?php
                 foreach ($contactArray as $contactObj) {
-                  print $contactObj->createContactHTML($file_root, "uploads/");
+                  print $contactObj->createContactHTML("uploads/");
                 }
               ?>
               <li>
-                <a href="<?php echo $file_root; ?>">
+                <a href="#">
                   <div class="contact-instance">
                     <div class="contact-image-wrapper">
-                      <img class="contact-image" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                      <img class="contact-image" src="/assets/defaultProfile.svg" alt="">
                     </div>
                     <span class="contact-name">Fake John</span>
                   </div>
@@ -128,12 +115,12 @@
           </div>
         </div>
         <div class="unselectable menu-close">
-          <img id="sidebar-close-arrow" src="<?php echo $file_root; ?>assets/icons/arrow_dropdown_white.svg" alt="">
+          <img id="sidebar-close-arrow" src="/assets/icons/arrow_dropdown_white.svg" alt="">
         </div>
       </div>
       <div class="home-feed">
         <div class="new-post">
-          <form id="new-post-form" class="new-post-form" action="<?php echo $file_root; ?>ajax/new_post.php" method="post" enctype="multipart/form-data">
+          <form id="new-post-form" class="new-post-form" action="/ajax/new_post.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="MAX_FILE_SIZE" value="12582912">
             <div class="new-post-inside">
               <h2 class="new-post-title">Share New Post</h2>
@@ -141,7 +128,7 @@
               <div class="new-post-buttons">
                 <img id="post-picture-preview" src="" alt="">
                 <div class="new-post-picture new-post-button">
-                  <img src="<?php echo $file_root; ?>assets/icons/add_photo.svg" alt="">
+                  <img src="/assets/icons/add_photo.svg" alt="">
                   <input id="new-post-picture" type="file" accept="image/*" name="post_picture" class="upload" />
                 </div>
                 <input id="new-post-submit" class="new-post-button" type="submit" name="" value="Post">
@@ -171,14 +158,14 @@
                     $comment->authorData($Row_SQL["Username"], $Row_SQL["Author"], $Row_SQL["ProfilePicture"]);
                     $comment->commentData($Row_SQL["ID"], $Row_SQL["Content"], $Row_SQL["PostTime"], $Row_SQL["Roses"]);
 
-                    $commentHTML .= $comment->createCommentHTML($file_root, "uploads/");
+                    $commentHTML .= $comment->createCommentHTML("uploads/");
                   }
 
                   mysqli_free_result($Query_SQL);
                 }
 
                 $postObj->comments = $commentHTML;
-                print $postObj->createPostHTML($file_root, "uploads/");
+                print $postObj->createPostHTML("uploads/");
               }
 
               mysqli_close($Connection_SQL);
@@ -187,7 +174,7 @@
               <div class="post">
                 <div class="post-info">
                   <div class="post-user-img-wrapper">
-                    <img class="post-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                    <img class="post-user-img" src="/assets/defaultProfile.svg" alt="">
                   </div>
                   <div class="post-user-info">
                     <span class="post-user-name"><a href="#">Fake John</a></span>
@@ -220,11 +207,11 @@
                   </div>
                   <div class="post-image">
                     <a href="#">
-                      <img class="post-img" src="<?php echo $file_root; ?>assets/defaultPost.jpg" alt="">
+                      <img class="post-img" src="/assets/defaultPost.jpg" alt="">
                     </a>
                   </div>
                   <div class="post-roses">
-                    <img class="post-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
+                    <img class="post-rose-icon" src="/assets/icons/rose.svg" alt="">
                     <span class="post-roses-no">90</span>
                   </div>
                 </div>
@@ -233,7 +220,7 @@
                   <div class="comment">
                     <div class="comment-inside">
                       <div class="comment-user-img-w">
-                        <img class="comment-user-img" src="<?php echo $file_root; ?>assets/defaultProfile.svg" alt="">
+                        <img class="comment-user-img" src="/assets/defaultProfile.svg" alt="">
                       </div>
                       <div class="comment-body">
                         <div class="comment-content">
@@ -243,7 +230,7 @@
                         <div class="comment-info">
                           <span class="comment-time">3 minutes</span>
                           <div class="comment-roses">
-                            <img class="comment-rose-icon" src="<?php echo $file_root; ?>assets/icons/rose.svg" alt="">
+                            <img class="comment-rose-icon" src="/assets/icons/rose.svg" alt="">
                             <span class="comment-roses-no">9</span>
                           </div>
                         </div>

@@ -1,35 +1,25 @@
 <?php
   $current_page = "verify";
 
-  $path_parts = explode('htdocs', __DIR__);
-  $path_deep = substr_count($path_parts[1], "/");
-  $file_root = "";
-
-  for ($i=0; $i < $path_deep; $i++) {
-    $file_root .= "../";
-  }
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
 
   // Overwrite Page Title
   $current_title = $main_strings['verify_title'];
-
-  // To Test Logged In Redirect
-  // $loggedIn = TRUE;
 
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
 
   // Do not show page if user is already verified or not logged in
   if (!$loggedIn) {
-    header("location: {$file_root}login");
+    header("location: /login");
     exit;
   } else {
     if ($Lost_Session) {
-      header("location: {$file_root}password/new.php");
+      header("location: /password/new.php");
       exit;
     } else if ($Verified_Session) {
-      header("location: {$file_root}");
+      header("location: /");
       exit;
     }
   }
@@ -93,7 +83,7 @@
                 $phpErrorMessage .= "Token Deleted and Account Verified in DB";
                 $_SESSION['verified'] = TRUE;
 
-                header("location: {$file_root}");
+                header("location: /");
                 exit;
               } else {
                 $showDatabaseError = TRUE;

@@ -1,24 +1,8 @@
 <?php
   $current_page = "new_comment";
 
-  function getRoot($DIR) {
-    $path_parts = explode('htdocs', $DIR);
-    $path_deep = substr_count($path_parts[1], "/");
-    $file_root = "";
-
-    for ($i=0; $i < $path_deep; $i++) {
-      $file_root .= "../";
-    }
-
-    return $file_root;
-  }
-
-  $file_root = getRoot(__DIR__);
-
+  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
   include "{$file_root}templates/php_init.php";
-
-  // To Test Logged In Redirect
-  // $loggedIn = TRUE;
 
   $debuggingActivated = FALSE;
   $phpErrorMessage = "Debugging Activated<br>";
@@ -105,7 +89,7 @@
     $newComment->authorData($Username_Session, "$Name_Session $Surnames_Session", $Picture_Session);
     $newComment->commentData($commentID, $CommentContent_Request, "A moment ago", "0");
 
-    $newCommentHTML = $newComment->createCommentHTML($file_root, "");
+    $newCommentHTML = $newComment->createCommentHTML("");
 
     $returnArray = ['error' => $errorMessage];
 
