@@ -83,7 +83,7 @@
     if (isset($_SESSION['main_strings']) && !$lang_changed) {
       $main_strings = $_SESSION['main_strings'];
     } else {
-      $main_strings = json_decode(file_get_contents($file_root . 'l10n/' . $lang . '/main_strings.json'), TRUE);
+      $main_strings = json_decode(file_get_contents($file_root . 'strings/' . $lang . '/main_strings.json'), TRUE);
       $_SESSION['main_strings'] = $main_strings;
       $_SESSION['lang'] = $lang;
     }
