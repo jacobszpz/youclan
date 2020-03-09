@@ -144,11 +144,6 @@
   }
 
   # OTHER #
-  $html_file_root = "/";
-  if (!empty($file_root)) {
-    $html_file_root = $file_root;
-  }
-
   $lang = getLanguage();
   $main_strings = setStrings($lang);
 
