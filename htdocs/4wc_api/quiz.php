@@ -5,10 +5,11 @@
   $randomise = filter_input(INPUT_GET, 'randomise', FILTER_VALIDATE_BOOLEAN);
 
   if ($randomise) {
-    foreach ($quiz as $question) {
+    foreach ($quiz as $key => $question) {
       $correct = $question['choices'][$question['correct']];
       shuffle($question['choices']);
       $question['correct'] = array_search($correct, $question['choices'], TRUE);
+      $quiz[$key] = $question;
     }
   }
 
