@@ -1,9 +1,18 @@
-{
-  "What is the meaning of covfefe?": {
+[
+  {
+    "question": "What is the meaning of covfefe?",
     "answers": [
       "42",
       "Joe mama"
     ],
     "correct_answer": 2
+  },
+  {
+    "question": "How long is my pp?",
+    "answers": [
+      "42km",
+      "Very"
+    ],
+    "correct_answer": 1
   }
-}
+]
