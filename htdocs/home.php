@@ -36,7 +36,7 @@
   us.Username AS Username,
   up.Filename AS PostPicture,
   ul.Filename AS ProfilePicture
-  FROM posts AS ps LEFT JOIN users as us ON (ps.PosterID = us.ID)
+  FROM posts AS ps LEFT JOIN users AS us ON (ps.PosterID = us.ID)
   LEFT JOIN uploads AS up ON (ps.ImageID = up.ID)
   LEFT JOIN uploads AS ul ON (us.ProfilePicture = ul.ID)
   ORDER BY PostTime DESC LIMIT 200";

@@ -1,0 +1,9 @@
+{
+  "What is the meaning of covfefe?": {
+    "answers": [
+      "42",
+      "Joe mama"
+    ],
+    "correct_answer": 2
+  }
+}
