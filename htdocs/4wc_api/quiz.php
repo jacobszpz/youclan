@@ -6,9 +6,9 @@
 
   if ($randomise) {
     foreach ($quiz as $question) {
-      $correct = $quiz['choices'][$quiz['correct']];
-      shuffle($quiz['choices']);
-      $quiz['correct'] = array_search($correct, $quiz['choices'], TRUE);
+      $correct = $question['choices'][$question['correct']];
+      shuffle($question['choices']);
+      $question['correct'] = array_search($correct, $question['choices'], TRUE);
     }
   }
 
