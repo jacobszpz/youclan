@@ -1,18 +1,22 @@
 [
   {
-    "question": "What is the meaning of covfefe?",
-    "answers": [
-      "42",
-      "Joe mama"
+    "question": "Who sang the parody of I'm Bad by M. Jackson?",
+    "choices": [
+      "Al Yankovich",
+      "Joe mama",
+      "Pavarotti",
+      "Prince"
     ],
-    "correct_answer": 2
+    "correct": 1
   },
   {
     "question": "How long is my pp?",
-    "answers": [
+    "choices": [
       "42km",
-      "Very"
+      "Very",
+      "Massive",
+      "Inmmense"
     ],
-    "correct_answer": 1
+    "correct": 1
   }
 ]
