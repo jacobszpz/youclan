@@ -69,7 +69,7 @@
             $Token_Result = $Row_SQL['VerifyToken'];
 
             // Check token
-            if($Token_Request = $Token_Result){
+            if($Token_Request == $Token_Result){
               $phpErrorMessage .= "Token Matches (yay)<br>";
 
               // Token is correct
