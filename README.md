@@ -53,7 +53,7 @@ The main feature of *youclan* is the ability to create posts. Said posts are com
 
 
 
-Due to time constraints a "friend" system could not be implemented. Ideally the left bar should show the user's friends/contacts. Currently it lists every user registered in the site.
+Due to time constraints a "friend" system could not be implemented. Ideally the left bar should show the user's friends/contacts. Currently it lists every user registered on the site.
 
 
 
