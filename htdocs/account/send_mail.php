@@ -1,7 +1,7 @@
 <?php
   $current_page = "send_mail";
 
-  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
+  $file_root = $_SERVER['DOCUMENT_ROOT'] . '/';
 
   function sendTokenMail($name, $user, $token) {
     global $file_root, $lang, $main_strings;

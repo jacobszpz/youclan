@@ -1,7 +1,7 @@
 <?php
   $current_page = "new_comment";
 
-  $file_root = substr(__FILE__, 0, strpos(__FILE__, 'htdocs') + 7);
+  $file_root = $_SERVER['DOCUMENT_ROOT'] . '/';
   include "{$file_root}templates/php_init.php";
 
   $debuggingActivated = FALSE;
