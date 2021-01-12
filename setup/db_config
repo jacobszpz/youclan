@@ -1,0 +1,5 @@
+MYSQL_DATABASE=main_youclan_uk
+MYSQL_USER=youclan_admin
+MYSQL_PASSWORD=changeme
+MYSQL_ROOT_PASSWORD=root
+MYSQL_SERVER=db

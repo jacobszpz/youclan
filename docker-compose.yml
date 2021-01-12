@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+    apache:
+        container_name: youclan-php-apache
+        build:
+          context: ./
+          dockerfile: Dockerfile
+        restart: always
+        env_file: ./setup/db_config
+        depends_on:
+            - db
+        volumes:
+            - ./htdocs:/var/www/html
+            - ./setup/config.php:/var/www/html/database/config.php
+            - ./setup/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+
+        ports:
+            - 8001:80
+    db:
+        container_name: youclan-mysql
+        image: mysql:5.7
+        restart: always
+        env_file: ./setup/db_config
+        volumes:
+            - ./setup/main_youclan_uk.sql:/docker-entrypoint-initdb.d/main_youclan_uk.sql
