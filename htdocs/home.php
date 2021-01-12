@@ -101,16 +101,6 @@
                   print $contactObj->createContactHTML("uploads/");
                 }
               ?>
-              <li>
-                <a href="#">
-                  <div class="contact-instance">
-                    <div class="contact-image-wrapper">
-                      <img class="contact-image" src="/assets/defaultProfile.svg" alt="">
-                    </div>
-                    <span class="contact-name">Fake John</span>
-                  </div>
-                </a>
-              </li>
             </ul>
           </div>
         </div>
